@@ -9,7 +9,6 @@ function App() {
   const { appStatus } = useContext(StatusContext);
 
   const getCurrenView = (appStatus: status) => {
-
   }
 
   return (
