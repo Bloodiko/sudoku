@@ -9,9 +9,15 @@ const Menu = () => {
         setAppStatus(newStatus);
     }
 
+    // read local storage for running game
+    // if there is a running game, show continue button
+
+    let gameRunning = window.localStorage.getItem("currentGame");
+
     return (
         <div>
             <h1>Menu</h1>
+            {gameRunning && <button onClick={() => changeStatus(status.GAME)}>Continue Game</button>}
             <button onClick={() => { changeStatus(status.DIFFICULTY) }} >Start Sudoku Game</button>
         </div>
     );
