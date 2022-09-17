@@ -2,7 +2,7 @@
 ## Description
 
 This is going to be a Sudoku Game. It is written in React with Typescript.
-​
+
 The Sudoku Generator used is from @Petewritescode: [Sudoku-gen@github](https://github.com/petewritescode/sudoku-gen)  
 
 ## Goals
@@ -16,7 +16,7 @@ The Sudoku Generator used is from @Petewritescode: [Sudoku-gen@github](https://g
 - continue game after reload
 - undo/redo
 - have a help function
-​
+
 ## Optional Goals
 
 - fill out all possible candidates
