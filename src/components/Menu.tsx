@@ -1,14 +1,12 @@
-import React from "react";
-
 import { StatusContext } from "./statusContext";
 import { useContext } from "react";
 import status from './statusEnum';
 
 const Menu = () => {
-    const { appStatus, setAppStatus } = useContext(StatusContext);
+    const { setAppStatus } = useContext(StatusContext);
 
-    const changeStatus = (appStatus) => {
-        setAppStatus(appStatus.GAME);
+    const changeStatus = (newStatus: status) => {
+        setAppStatus(newStatus);
     }
 
     return (
