@@ -1,9 +1,12 @@
 import { StatusContext } from "./statusContext";
+import { DifficultyContext } from "./DifficultyContext";
 import { useContext } from "react";
 import status from './statusEnum';
+import diffEnum from "./difficultyEnum";
 
 const Menu = () => {
     const { setAppStatus } = useContext(StatusContext);
+    const { setDifficulty } = useContext(DifficultyContext);
 
     const changeStatus = (newStatus: status) => {
         setAppStatus(newStatus);
@@ -17,7 +20,11 @@ const Menu = () => {
     return (
         <div>
             <h1>Menu</h1>
-            {gameRunning && <button onClick={() => changeStatus(status.GAME)}>Continue Game</button>}
+            {gameRunning && <button onClick={() => {
+                setDifficulty(diffEnum.CONTINUE)
+                changeStatus(status.GAME)
+            }
+            }>Continue Game</button>}
             <button onClick={() => { changeStatus(status.DIFFICULTY) }} >Start Sudoku Game</button>
         </div>
     );
