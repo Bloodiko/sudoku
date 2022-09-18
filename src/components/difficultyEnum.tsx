@@ -1,11 +1,11 @@
 const enum difficulty {
-    EASY,
-    MEDIUM,
-    HARD,
-    EXPERT,
-    RANDOM,
-    CONTINUE,
-    NONE
+    EASY = "Easy",
+    MEDIUM = "Medium",
+    HARD = "Hard",
+    EXPERT = "Expert",
+    RANDOM = "Random",
+    CONTINUE = "Continue",
+    NONE = "None"
 }
 
 export default difficulty;
