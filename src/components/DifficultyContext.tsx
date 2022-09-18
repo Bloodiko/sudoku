@@ -6,13 +6,13 @@ interface IStatusProps {
     children?: React.ReactNode;
 }
 
-const DifficultyContext = React.createContext({ difficulty: diffEnum.NONE, setDifficulty: (difficulty: diffEnum) => { } });
+const DifficultyContext = React.createContext({ gamedifficulty: diffEnum.NONE, setDifficulty: (difficulty: diffEnum) => { } });
 
 const DifficultyProvider = (props: IStatusProps) => {
-    const [difficulty, setDifficulty] = useState(diffEnum.NONE);
+    const [gamedifficulty, setDifficulty] = useState(diffEnum.NONE);
 
     return (
-        <DifficultyContext.Provider value={{ difficulty, setDifficulty }}>
+        <DifficultyContext.Provider value={{ gamedifficulty, setDifficulty }}>
             {props.children}
         </DifficultyContext.Provider>
     );
