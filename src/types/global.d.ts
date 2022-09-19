@@ -15,7 +15,7 @@ declare global {
     }
 
     type cellProps = {
-        value: number | null,
+        value: string | undefined,
         candidates: candidates,
         locked: bool,
     }
