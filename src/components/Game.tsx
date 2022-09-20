@@ -30,29 +30,16 @@ const genDiff = (diff: diffEnum): Difficulty | undefined => {
 }
 
 const Game = () => {
-    const { gamedifficulty, setDifficulty } = useContext(DifficultyContext);
+    const { gamedifficulty } = useContext(DifficultyContext);
 
     const [game, setGame] = useState(undefined as Sudoku | undefined);
     console.log('rerender game')
 
 
-    // { game: game, setDifficulty: setDifficulty }
-    const combinedGameDiff = useMemo(() => {
-        return { game: game, setDifficulty: setDifficulty, gamedifficulty: gamedifficulty }
-    }, [game, setDifficulty, gamedifficulty]);
-
+    // the memo is to prevent the game from being generated on every rerender, and only when the difficulty changes
     const combinedDiffSetGame = useMemo(() => {
         return { difficulty: gamedifficulty, setGame: setGame, game: game }
     }, [gamedifficulty, setGame, game]);
-
-
-    useEffect(() => {
-        if (combinedGameDiff.gamedifficulty !== diffEnum.NONE) {
-            return;
-        }
-        console.log('game exists - reset difficulty')
-        combinedGameDiff.setDifficulty(diffEnum.NONE)
-    }, [combinedGameDiff])
 
     useEffect(() => {
         if (combinedDiffSetGame.game) {
