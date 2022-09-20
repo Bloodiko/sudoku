@@ -1,4 +1,8 @@
 //component for game
+
+/* 
+    Generates new Game or loads it, and creates GameBoard
+*/
 import React, { useMemo } from 'react';
 import { DifficultyContext } from './DifficultyContext';
 import { useContext } from 'react';
@@ -11,7 +15,7 @@ import { Sudoku } from 'sudoku-gen/dist/types/sudoku.type';
 import { useState } from 'react';
 
 import { getSudoku } from 'sudoku-gen';
-import Cell from './gameComponents/Cell';
+
 
 //convert difficulty enum to sudoku-gen difficulty -> is there an easier way?
 const genDiff = (diff: diffEnum): Difficulty | undefined => {
@@ -54,105 +58,7 @@ const Game = () => {
         <div>
             <h1>Game</h1>
             <p>Difficulty: {game?.difficulty}</p>
-            <div className="gamerow">
-                <div className="gamecell"><Cell value={game?.puzzle[0].toString()} candidates={{ 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false }} locked={false} ></Cell></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
-            <div className="gamerow">
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
-            <div className="gamerow">
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
-            <div className="gamerow">
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
-            <div className="gamerow">
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
-            <div className="gamerow">
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
-            <div className="gamerow">
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
-            <div className="gamerow">
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
-            <div className="gamerow">
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-                <div className="gamecell"></div>
-            </div>
+
         </div>
     );
 }
