@@ -2,22 +2,24 @@ export { }
 
 declare global {
 
-    type candidates = {
-        1: bool,
-        2: bool,
-        3: bool,
-        4: bool,
-        5: bool,
-        6: bool,
-        7: bool,
-        8: bool,
-        9: bool
+    interface candidates extends Record<string, boolean> {
+        'one': boolean,
+        'two': boolean,
+        'three': boolean,
+        'four': boolean,
+        'five': boolean,
+        'six': boolean,
+        'seven': boolean,
+        'eight': boolean,
+        'nine': boolean,
     }
 
     type cellProps = {
-        value: string | undefined,
-        candidates: candidates,
-        locked: bool,
+        cell: number,
+        locked: boolean,
+        row: number,
+        col: number,
+        cube: number,
     }
 
     type candidateProps = {
