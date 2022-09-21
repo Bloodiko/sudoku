@@ -4,6 +4,7 @@ import React from 'react';
 
 import { Sudoku } from 'sudoku-gen/dist/types/sudoku.type';
 import { CandidatesProvider } from './CandidatesContext';
+import GameBoard from './GameBoard';
 
 interface GameBoardWrapperProps {
     game: Sudoku;
@@ -14,7 +15,7 @@ const GameBoardWrapper = (props: GameBoardWrapperProps) => {
     return (
         <>
             <CandidatesProvider>
-
+                <GameBoard game={props.game} />
             </CandidatesProvider>
         </>
     )

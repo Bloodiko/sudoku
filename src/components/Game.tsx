@@ -15,6 +15,7 @@ import { Sudoku } from 'sudoku-gen/dist/types/sudoku.type';
 import { useState } from 'react';
 
 import { getSudoku } from 'sudoku-gen';
+import GameBoardWrapper from './gameComponents/GameBoardWrapper';
 
 
 //convert difficulty enum to sudoku-gen difficulty -> is there an easier way?
@@ -58,7 +59,7 @@ const Game = () => {
         <div>
             <h1>Game</h1>
             <p>Difficulty: {game?.difficulty}</p>
-
+            {game && <GameBoardWrapper game={game} />}
         </div>
     );
 }

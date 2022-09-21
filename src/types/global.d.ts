@@ -20,9 +20,10 @@ declare global {
         row: number,
         col: number,
         cube: number,
+        value: string,
     }
 
     type candidateProps = {
-        candidates: candidates,
+        cell: number,
     }
 }
