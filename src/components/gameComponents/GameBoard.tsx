@@ -21,7 +21,7 @@ const GameBoard = (props: GameBoardProps) => {
             const cellBox = Math.floor(cellRow / 3) * 3 + Math.floor(cellColumn / 3);
             const cellLocked = cellValue !== "-";
 
-            cells.push(<>
+            cells.push(
                 <Cell
                     cell={cellNumber}
                     row={cellRow}
@@ -31,19 +31,20 @@ const GameBoard = (props: GameBoardProps) => {
                     value={cellValue}
                     key={'cell' + cellNumber.toString()}
                 ></Cell>
-            </>)
-
-            return (<>
-                {
-                    cells.map((cell, index) => {
-                        return cell;
-                    })
-                }
-            </>
             )
 
         }
+        return (<>
+            {
+                cells.map((cell, index) => {
+                    return cell;
+                })
+            }
+        </>
+        )
+
     }
+
 
     return (
         <div className="gameBoard">
