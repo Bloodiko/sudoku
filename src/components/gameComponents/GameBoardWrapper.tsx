@@ -1,9 +1,7 @@
-import React from 'react';
-// Sudoku GameBoardWrapper
-// Contains Contexts for Game: Cell Info and Candidates
 
 import { Sudoku } from 'sudoku-gen/dist/types/sudoku.type';
 import { CandidatesProvider } from './CandidatesContext';
+import { GameProvider } from './GameContext';
 import GameBoard from './GameBoard';
 
 interface GameBoardWrapperProps {
@@ -14,9 +12,11 @@ const GameBoardWrapper = (props: GameBoardWrapperProps) => {
 
     return (
         <>
-            <CandidatesProvider>
-                <GameBoard game={props.game} />
-            </CandidatesProvider>
+            <GameProvider game={props.game}>
+                <CandidatesProvider>
+                    <GameBoard game={props.game} />
+                </CandidatesProvider>
+            </GameProvider>
         </>
     )
 }

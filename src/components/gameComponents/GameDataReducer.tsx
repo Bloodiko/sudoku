@@ -1,15 +1,38 @@
+import { Sudoku } from "sudoku-gen/dist/types/sudoku.type";
+import { Actions, ReducerAction } from "../../types/GameDataReducerType";
 
-const gameDataReducer = (state: GameData, action: any) => {
+
+export const init = (game: Sudoku) => {
+    return {
+        generatedGame: game,
+        currentGameState: game.puzzle,
+        selectedCell: null,
+        lastMoves: [],
+    } as GameData
+}
+
+
+const gameDataReducer = (state: GameData, action: ReducerAction) => {
     switch (action.type) {
-        case 'selectCell':
-            return { ...state, selectedCell: action.payload };
-        case 'updateGameState':
-            return { ...state, currentGameState: action.payload };
-        case 'updateLastMoves':
-            return { ...state, lastMoves: action.payload };
+        case Actions.selectCell:
+            return {
+                ...state,
+                selectedCell: action.payload
+            }
+        case Actions.setCellValue:
+            return {
+                ...state,
+                selectedCell: action.payload
+            }
+
+        case Actions.newGame:
+            return init(action.payload)
+
         default:
             return state;
     }
 }
 
 export default gameDataReducer;
+
+
