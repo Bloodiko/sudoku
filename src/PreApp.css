@@ -81,6 +81,17 @@
   background-color: gray !important;
 }
 
+.cellCandidatesWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+}
+
+/*
+_____________________________________________________ 
+Sudoku Board Border 
+*/
+
 .col2,
 .col5,
 .col8 {
