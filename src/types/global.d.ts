@@ -26,4 +26,19 @@ declare global {
     type candidateProps = {
         cell: number,
     }
+
+    type GameData = {
+        generatedGame: Sudoku;
+        currentGameState: string;
+        selectedCell: number | null;
+
+        lastMoves: move[] | []; // temp, maybe TODO
+
+    };
+
+    type move = {
+        cell: number,
+        value?: string,
+        candidate?: string,
+    }
 }
