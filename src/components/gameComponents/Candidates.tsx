@@ -3,7 +3,7 @@ import { CandidatesContext } from "./CandidatesContext";
 
 const Candidates = (props: candidateProps) => {
 
-    const { candidates, dispatch } = useContext(CandidatesContext);
+    const { candidates } = useContext(CandidatesContext);
 
     return (
         <>
