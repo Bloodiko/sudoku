@@ -66,7 +66,7 @@ const GameBoard = (props: GameBoardProps) => {
     useEffect(() => {
         const onKeyPress = (e: any) => {
 
-            if (e.target.nodeName !== "BODY") {
+            if (e.target.nodeName !== "BODY") { // ignore keypresses if the target is input fields or other elements
                 return;
             }
             if (!validCodes.includes(e.code)) {
@@ -79,49 +79,13 @@ const GameBoard = (props: GameBoardProps) => {
 
             if (e.code === "Backspace") {
                 dispatch({ type: Actions.setCellValue, payload: -1 })
+                return;
             }
 
-            switch (e.code) {
-
-                case "Digit1":
-                case "Numpad1":
-                    dispatch({ type: Actions.setCellValue, payload: 1 })
-                    break;
-                case "Digit2":
-                case "Numpad2":
-                    dispatch({ type: Actions.setCellValue, payload: 2 })
-                    break;
-                case "Digit3":
-                case "Numpad3":
-                    dispatch({ type: Actions.setCellValue, payload: 3 })
-                    break;
-                case "Digit4":
-                case "Numpad4":
-                    dispatch({ type: Actions.setCellValue, payload: 4 })
-                    break;
-                case "Digit5":
-                case "Numpad5":
-                    dispatch({ type: Actions.setCellValue, payload: 5 })
-                    break;
-                case "Digit6":
-                case "Numpad6":
-                    dispatch({ type: Actions.setCellValue, payload: 6 })
-                    break;
-                case "Digit7":
-                case "Numpad7":
-                    dispatch({ type: Actions.setCellValue, payload: 7 })
-                    break;
-                case "Digit8":
-                case "Numpad8":
-                    dispatch({ type: Actions.setCellValue, payload: 8 })
-                    break;
-                case "Digit9":
-                case "Numpad9":
-                    dispatch({ type: Actions.setCellValue, payload: 9 })
-                    break;
-                default:
-                    break;
-            }
+            const value = parseInt(e.code[e.code.length - 1]);
+            e.shiftKey ?
+                dispatch({ type: Actions.toggleCandidate, payload: value })
+                : dispatch({ type: Actions.setCellValue, payload: value })
 
         }
 

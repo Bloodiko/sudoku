@@ -3,6 +3,7 @@ import { Sudoku } from "sudoku-gen/dist/types/sudoku.type"
 enum Actions {
     selectCell,
     setCellValue,
+    toggleCandidate,
     appendLastMove,
     updateLastMoves,
     newGame,
@@ -18,12 +19,17 @@ type SetCellValueAction = {
     payload: number
 }
 
+type ToggleCandidateAction = {
+    type: Actions.toggleCandidate,
+    payload: number
+}
+
 type NewGameAction = {
     type: Actions.newGame,
     payload: Sudoku
 }
 
-type ReducerAction = SelectCellAction | SetCellValueAction | NewGameAction;
+type ReducerAction = SelectCellAction | SetCellValueAction | NewGameAction | ToggleCandidateAction;
 
 export type { ReducerAction };
 export { Actions };

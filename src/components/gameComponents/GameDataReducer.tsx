@@ -2,7 +2,7 @@ import { Sudoku } from "sudoku-gen/dist/types/sudoku.type";
 import { Actions, ReducerAction } from "../../types/GameDataReducerType";
 
 
-const candidatesObj: candidates = {
+let candidatesObj: candidates = {
     'one': false,
     'two': false,
     'three': false,
@@ -14,20 +14,24 @@ const candidatesObj: candidates = {
     'nine': false,
 };
 
+const candidateOptions = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']; // zero included to match the index of the candidate
 
-const candidatesArray = new Array(81).fill({ ...candidatesObj }) as candidates[];
+
+
 
 export const init = (game: Sudoku) => {
+    console.log("init game data");
+    const candidatesArray = new Array(81).fill(null).map(() => ({ ...candidatesObj }));
     return {
         generatedGame: game,
         currentGameState: game.puzzle.split(''),
-        selectedCell: undefined,
+        selectedCell: null,
         candidates: candidatesArray,
         lastMoves: [],
     } as GameData
 }
 
-const confirmNumber = (value: number) => {
+const isValidNumber = (value: number) => {
     if (value < 1 || value > 9) {
         return false;
     }
@@ -36,6 +40,7 @@ const confirmNumber = (value: number) => {
 
 
 const gameDataReducer = (state: GameData, action: ReducerAction) => {
+    console.log("run dispatch");
     switch (action.type) {
         case Actions.selectCell:
             return {
@@ -43,7 +48,8 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 selectedCell: action.payload
             }
         case Actions.setCellValue:
-            if (!state.selectedCell) {
+
+            if (state.selectedCell === null) {
                 console.log("nothing selected, aborting")
                 return state;
             }
@@ -58,15 +64,32 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 }
             }
             else {
-                if (!confirmNumber(action.payload)) {
+                if (!isValidNumber(action.payload)) {
                     return state;
                 }
                 const newGameState = [...state.currentGameState];
                 newGameState[state.selectedCell] = action.payload.toString();
                 return {
                     ...state,
-                    currentGameState: newGameState
+                    currentGameState: newGameState,
+                    selectedCell: null
                 }
+            }
+
+        case Actions.toggleCandidate:
+            if (state.selectedCell === null) {
+                console.log("nothing selected, aborting")
+                return state;
+            }
+            const newCandidates = [...state.candidates];
+            console.log(newCandidates[state.selectedCell]);
+            newCandidates[state.selectedCell][candidateOptions[action.payload]] = !newCandidates[state.selectedCell][candidateOptions[action.payload]];
+
+            console.log(newCandidates[state.selectedCell]);
+
+            return {
+                ...state,
+                candidates: newCandidates
             }
 
         case Actions.newGame:
