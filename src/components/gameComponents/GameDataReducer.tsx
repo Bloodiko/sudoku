@@ -21,7 +21,7 @@ export const init = (game: Sudoku) => {
     return {
         generatedGame: game,
         currentGameState: game.puzzle.split(''),
-        selectedCell: null,
+        selectedCell: undefined,
         candidates: candidatesArray,
         lastMoves: [],
     } as GameData

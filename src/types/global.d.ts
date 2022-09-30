@@ -30,7 +30,7 @@ declare global {
     type GameData = {
         generatedGame: Sudoku;
         currentGameState: string[];
-        selectedCell: number | null;
+        selectedCell: number | undefined;
         candidates: candidates[];
         lastMoves: move[] | []; // temp, maybe TODO
 
