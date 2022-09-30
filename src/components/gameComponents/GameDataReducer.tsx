@@ -2,11 +2,27 @@ import { Sudoku } from "sudoku-gen/dist/types/sudoku.type";
 import { Actions, ReducerAction } from "../../types/GameDataReducerType";
 
 
+const candidatesObj: candidates = {
+    'one': false,
+    'two': false,
+    'three': false,
+    'four': false,
+    'five': false,
+    'six': false,
+    'seven': false,
+    'eight': false,
+    'nine': false,
+};
+
+
+const candidatesArray = new Array(81).fill({ ...candidatesObj }) as candidates[];
+
 export const init = (game: Sudoku) => {
     return {
         generatedGame: game,
         currentGameState: game.puzzle.split(''),
         selectedCell: null,
+        candidates: candidatesArray,
         lastMoves: [],
     } as GameData
 }

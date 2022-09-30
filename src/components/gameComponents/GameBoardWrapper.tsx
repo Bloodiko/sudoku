@@ -1,6 +1,5 @@
 
 import { Sudoku } from 'sudoku-gen/dist/types/sudoku.type';
-import { CandidatesProvider } from './CandidatesContext';
 import { GameProvider } from './GameContext';
 import GameBoard from './GameBoard';
 
@@ -13,9 +12,7 @@ const GameBoardWrapper = (props: GameBoardWrapperProps) => {
     return (
         <>
             <GameProvider game={props.game}>
-                <CandidatesProvider>
-                    <GameBoard game={props.game} />
-                </CandidatesProvider>
+                <GameBoard game={props.game} />
             </GameProvider>
         </>
     )

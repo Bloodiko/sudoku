@@ -40,8 +40,9 @@ const Game = () => {
     const [game, setGame] = useState(undefined as Sudoku | undefined);
     console.log('rerender game')
 
-
     // the memo is to prevent the game from being generated on every rerender, and only when the difficulty changes
+    // TODO: this needs to change! documentations says that this is not a good way to do this → useRef? 
+
     const combinedDiffSetGame = useMemo(() => {
         return { difficulty: gamedifficulty, setGame: setGame, game: game }
     }, [gamedifficulty, setGame, game]);

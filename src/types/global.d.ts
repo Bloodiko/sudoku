@@ -31,7 +31,7 @@ declare global {
         generatedGame: Sudoku;
         currentGameState: string[];
         selectedCell: number | null;
-
+        candidates: candidates[];
         lastMoves: move[] | []; // temp, maybe TODO
 
     };

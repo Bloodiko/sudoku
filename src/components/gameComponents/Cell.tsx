@@ -18,6 +18,7 @@ const Cell = (props: cellProps) => {
         }
     }
 
+
     return (
         <div className={classes} onClick={onClick}>
             {
