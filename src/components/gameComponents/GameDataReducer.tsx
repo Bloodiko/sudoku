@@ -21,7 +21,16 @@ const candidateOptions = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 
 
 export const init = (game: Sudoku) => {
     console.log("init game data");
-    const candidatesArray = new Array(81).fill(null).map(() => ({ ...candidatesObj }));
+
+    // neccessary, otherwise the candidates are references to the same object
+    let candidatesArray = new Array(81).fill(null);
+
+    for (let i = 0; i < 81; i++) {
+        candidatesArray[i] = { ...candidatesObj };
+    }
+
+
+
     return {
         generatedGame: game,
         currentGameState: game.puzzle.split(''),
@@ -81,15 +90,15 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 console.log("nothing selected, aborting")
                 return state;
             }
-            const newCandidates = [...state.candidates];
-            console.log(newCandidates[state.selectedCell]);
-            newCandidates[state.selectedCell][candidateOptions[action.payload]] = !newCandidates[state.selectedCell][candidateOptions[action.payload]];
-
-            console.log(newCandidates[state.selectedCell]);
-
             return {
                 ...state,
-                candidates: newCandidates
+                candidates: {
+                    ...state.candidates,
+                    [state.selectedCell]: {
+                        ...state.candidates[state.selectedCell],
+                        [candidateOptions[action.payload]]: !state.candidates[state.selectedCell][candidateOptions[action.payload]]
+                    }
+                }
             }
 
         case Actions.newGame:
