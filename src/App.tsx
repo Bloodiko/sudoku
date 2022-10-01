@@ -10,7 +10,7 @@ import status from './components/statusEnum';
 
 function App() {
 
-    const { appStatus } = useContext(StatusContext);
+    const { appStatus, setAppStatus } = useContext(StatusContext);
 
     const getCurrenView = (appStatus: status) => {
         switch (appStatus) {
@@ -30,9 +30,11 @@ function App() {
     }
 
     return (
-        <div>
+        <>
             {getCurrenView(appStatus)}
-        </div>
+            {/* absolute button back to menu */}
+            {appStatus !== status.MENU && <button className="backToMenuButton" onClick={() => setAppStatus(status.MENU)}>Back to menu</button>}
+        </>
     );
 }
 
