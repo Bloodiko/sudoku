@@ -33,6 +33,8 @@ declare global {
         selectedCell: number | null;
         candidates: candidates[];
         lastMoves: move[]; // temp, maybe TODO
+        completed: boolean;
+        completedOverlay: boolean;
 
     };
 

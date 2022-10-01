@@ -4,6 +4,7 @@ import Cell from "./Cell"
 import { GameContext } from "./GameContext"
 import { useContext } from "react"
 import { Actions } from "../../types/GameDataReducerType"
+import CompletedOverlay from "./CompletedOverlay"
 
 interface GameBoardProps {
     game: Sudoku
@@ -24,7 +25,7 @@ const validCodes = [
 
 const GameBoard = (props: GameBoardProps) => {
 
-    const { dispatch } = useContext(GameContext);
+    const { gamedata, dispatch } = useContext(GameContext);
 
     const buildGameBoard = (game: Sudoku) => {
 
@@ -101,6 +102,8 @@ const GameBoard = (props: GameBoardProps) => {
     return (
         <div className="gameBoard">
             {buildGameBoard(props.game)}
+
+            {gamedata.completed && gamedata.completedOverlay && <CompletedOverlay />}
         </div>
 
     )

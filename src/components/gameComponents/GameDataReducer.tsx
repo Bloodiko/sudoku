@@ -37,6 +37,8 @@ export const init = (game: Sudoku) => {
         selectedCell: null,
         candidates: candidatesArray,
         lastMoves: [],
+        completed: false,
+        completedOverlay: false
     } as GameData
 }
 
@@ -47,11 +49,20 @@ const isValidNumber = (value: number) => {
     return true;
 }
 
+const checkCompleted = (gameState: string[], game: Sudoku) => {
+    return gameState.join('') === game.solution ? true : false;
+
+}
+
 
 const gameDataReducer = (state: GameData, action: ReducerAction) => {
     console.log("run dispatch");
     switch (action.type) {
         case Actions.selectCell:
+            if (state.completed) {
+                console.log("game completed");
+                return state;
+            }
             return {
                 ...state,
                 selectedCell: action.payload
@@ -78,9 +89,13 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 }
                 const newGameState = [...state.currentGameState];
                 newGameState[state.selectedCell] = action.payload.toString();
+
+                const completed = checkCompleted(newGameState, state.generatedGame);
                 return {
                     ...state,
                     currentGameState: newGameState,
+                    completed: completed,
+                    completedOverlay: completed,
                     selectedCell: null
                 }
             }
@@ -103,6 +118,12 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
         case Actions.newGame:
             return init(action.payload)
+
+        case Actions.closeOverlay:
+            return {
+                ...state,
+                completedOverlay: false
+            }
 
         default:
             return state;
