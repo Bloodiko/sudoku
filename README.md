@@ -34,3 +34,7 @@ Press Shift and press any number on your Keyboard ( Shift Key + 1 to 9  or Shift
 - fill out all possible candidates
 - explain possible next steps (not only hint but also explain why)
   - solving techniques
+
+## Credits 
+
+- Favicon/Logo from: https://www.flaticon.com/de/kostenloses-icon/zeitvertreib_3364989#
