@@ -31,9 +31,9 @@ function App() {
 
     return (
         <>
-            {getCurrenView(appStatus)}
-            {/* absolute button back to menu */}
+            {/* button back to menu, in-document for mobile & absolute for desktop */}
             {appStatus !== status.MENU && <button className="backToMenuButton" onClick={() => setAppStatus(status.MENU)}>Back to menu</button>}
+            {getCurrenView(appStatus)}
         </>
     );
 }
