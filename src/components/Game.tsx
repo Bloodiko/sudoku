@@ -57,11 +57,11 @@ const Game = () => {
 
 
     return (
-        <div>
+        <>
             <h1>Game</h1>
             <p>Difficulty: {game?.difficulty}</p>
             {game && <GameBoardWrapper game={game} />}
-        </div>
+        </>
     );
 }
 

@@ -17,7 +17,7 @@ const Difficulty = () => {
     }
 
     return (
-        <div>
+        <>
             <h1>Difficulty</h1>
 
             <h3>Select Difficulty for the new Game:</h3>
@@ -29,7 +29,7 @@ const Difficulty = () => {
                 <button className="diffBtn" onClick={() => { changeDifficulty(diffEnum.EXPERT) }}>Expert</button>
                 <button className="diffBtn" onClick={() => { changeDifficulty(diffEnum.RANDOM) }}>Random</button>
             </div>
-        </div>
+        </>
     );
 }
 

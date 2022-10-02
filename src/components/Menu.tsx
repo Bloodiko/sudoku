@@ -18,7 +18,7 @@ const Menu = () => {
     let gameRunning = window.localStorage.getItem("gameRunning");
 
     return (
-        <div>
+        <>
             <h1>Menu</h1>
             {gameRunning && <button onClick={() => {
                 setDifficulty(diffEnum.CONTINUE)
@@ -26,7 +26,7 @@ const Menu = () => {
             }
             }>Continue Game</button>}
             <button onClick={() => { changeStatus(status.DIFFICULTY) }} >Start Sudoku Game</button>
-        </div>
+        </>
     );
 }
 
