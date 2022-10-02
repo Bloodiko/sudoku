@@ -1,5 +1,7 @@
-.PreApp {
-  text-align: center;
+.PreApp > div {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
 }
 
 .diffDiv {
@@ -34,12 +36,12 @@
   height: 100%
 }
 
+
 .gameBoard {
   display: grid;
   grid-template-columns: repeat(9, min-content);
   /* das ist mega cool ↑ */
-  margin-left: 27.5vw;
-  margin-right: 27.5vw;
+
   user-select: none;
 
 }
