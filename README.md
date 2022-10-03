@@ -34,3 +34,12 @@ Press Shift and press any number on your Keyboard ( Shift Key + 1 to 9  or Shift
 - fill out all possible candidates
 - explain possible next steps (not only hint but also explain why)
   - solving techniques
+
+## Ideas 
+
+- Use this simpler icon as favicon, bc. current blue one is too detailed?  
+  https://www.flaticon.com/de/kostenloses-icon/sudoku_5731711?term=sudoku&page=1&position=9&page=1&position=9&related_id=5731711&origin=tag
+
+## Credits 
+
+- Favicon/Logo from: https://www.flaticon.com/de/kostenloses-icon/zeitvertreib_3364989#
