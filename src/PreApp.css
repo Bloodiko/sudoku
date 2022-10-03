@@ -1,4 +1,7 @@
 .PreApp {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   text-align: center;
 }
 
@@ -34,12 +37,12 @@
   height: 100%
 }
 
+
 .gameBoard {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(9, min-content);
   /* das ist mega cool ↑ */
-  margin-left: 27.5vw;
-  margin-right: 27.5vw;
+
   user-select: none;
 
 }
@@ -89,10 +92,14 @@
   cursor: pointer;
 }
 
+/**
+ * 
+ */
 .backToMenuButton {
-  position: absolute;
-  top: 0;
-  left: 0;
+  /* 
+    Removed position: absolute from here, bc. on Mobile it obstructs the header.
+    By removing the "position: absolute" we join this button into the main, top-to-bottom flexbox for layouting
+  */
   font-size: 2em;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
@@ -123,4 +130,20 @@ Sudoku Board Border
 
 .col0 {
   border-left: 5px solid black;
+}
+
+/* 
+ * @bjesuiter
+ * Best Breakpoint for main Game Screen: 530px 
+ * Best Breakpoint for Difficulty Selection Screen: 580px;
+ * => Choosing 580px for now to not obstruct heading in Difficulty Selection
+*/
+@media screen and (min-width: 580px) {
+
+  .backToMenuButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
 }
