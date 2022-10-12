@@ -11,7 +11,7 @@ interface GameBoardProps {
 }
 
 const validCodes = [
-    "Backspace",
+    "Backspace", "Delete",
     "Digit1", "Numpad1",
     "Digit2", "Numpad2",
     "Digit3", "Numpad3",
@@ -73,8 +73,6 @@ const GameBoard = (props: GameBoardProps) => {
             if (!validCodes.includes(e.code)) {
                 return;
             }
-
-            console.log(e);
 
             e.stopPropagation();
 

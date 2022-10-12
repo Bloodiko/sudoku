@@ -47,6 +47,39 @@
 
 }
 
+.numpad {
+  display: grid;
+  margin-top: 5vh;
+  grid-template-columns: repeat(3, min-content);
+  grid-template-rows: repeat(3, min-content);
+
+  user-select: none;
+
+}
+
+.numberButton {
+  width: 5vh;
+  height: 5vh;
+  font-size: 1.5em;
+}
+
+button.numberComplete {
+  background-color: forestgreen;
+}
+
+button.numberTooMany {
+  background-color: rgb(255, 45, 45);
+}
+
+.candidateButton {
+  display: grid;
+  width: 5vh;
+  height: 5vh;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+}
+
 .cell {
   width: 5vh;
   height: 5vh;
