@@ -15,7 +15,7 @@ const Menu = () => {
     // read local storage for running game
     // if there is a running game, show continue button
 
-    let gameRunning = window.localStorage.getItem("gameRunning");
+    const gameRunning = window.localStorage.getItem("gameRunning");
 
     return (
         <>

@@ -119,6 +119,10 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
         case Actions.newGame:
             return init(action.payload)
 
+        case Actions.loadGame:
+            console.log("load game");
+            return action.payload
+
         case Actions.closeOverlay:
             return {
                 ...state,
