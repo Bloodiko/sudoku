@@ -42,6 +42,12 @@ const CandidateButton = (props: { num: number, onClick: (num: number) => void })
     )
 }
 
+const ToolbarToggleNumpadButton = (props: { isCandidatesNumpadUsed: boolean, onClick: () => void }) => {
+    return (
+        <button className="toolbarButton" onClick={props.onClick}>Switch to {props.isCandidatesNumpadUsed ? "Normal Numpad" : "Candidates Numpad"}</button>
+    )
+}
+
 const isShiftKeyEvent = (e: KeyboardEvent) => {
     return e.key === "Shift" || e.key === "ShiftLeft" || e.key === "ShiftRight";
 }
@@ -87,14 +93,18 @@ const Numpad = () => {
     }
 
     return (
-        <div className="numpad">
-            {!useCandidatesNumpad && numpad.map((num, index) => (
-                <NumberButton key={num} count={numberCount[index]} num={num} onClick={handleClickCell} />
-            ))}
-            {useCandidatesNumpad && numpad.map((num) => (
-                <CandidateButton key={num} num={num} onClick={handleClickCandidate} />
-            ))}
-        </div>
+        <>
+            <div className="numpad">
+                {!useCandidatesNumpad && numpad.map((num, index) => (
+                    <NumberButton key={num} count={numberCount[index]} num={num} onClick={handleClickCell} />
+                ))}
+                {useCandidatesNumpad && numpad.map((num) => (
+                    <CandidateButton key={num} num={num} onClick={handleClickCandidate} />
+                ))}
+
+            </div>
+            <ToolbarToggleNumpadButton isCandidatesNumpadUsed={useCandidatesNumpad} onClick={() => setUseCandidatesNumpad(!useCandidatesNumpad)} />
+        </>
     )
 }
 

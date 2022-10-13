@@ -80,6 +80,10 @@ button.numberTooMany {
 
 }
 
+.toolbarButton {
+  margin-top: 1em;
+}
+
 .cell {
   width: 5vh;
   height: 5vh;
