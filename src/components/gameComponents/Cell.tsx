@@ -28,7 +28,7 @@ const Cell = (props: cellProps) => {
 
   return (
     <div className={classes} onClick={onClick}>
-      <span>{value !== "-" ? value : <Candidates cell={props.cell} />}</span>
+      {value !== "-" ? <span>{value}</span> : <Candidates cell={props.cell} />}
     </div>
   );
 };
