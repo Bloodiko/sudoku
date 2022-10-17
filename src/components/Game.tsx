@@ -55,7 +55,7 @@ const Game = () => {
         // if difficulty is continue, load game from local storage
         if (combinedDiffSetGame.difficulty === diffEnum.CONTINUE) {
             const gameData = JSON.parse(localStorage.getItem("currentGameData") || '{}');
-            setGame(gameData.game);
+            setGame(gameData.generatedGame);
             return;
         }
         console.log('game does not exist - generate sudoku')
