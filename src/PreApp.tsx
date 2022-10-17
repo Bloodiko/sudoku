@@ -2,6 +2,7 @@ import './PreApp.css';
 
 import { StatusProvider } from "./components/statusContext";
 import { DifficultyProvider } from "./components/DifficultyContext";
+import { CommunicationProvider } from './components/ComRefContext';
 import App from "./App";
 
 
@@ -11,7 +12,9 @@ function PreApp() {
     <div className="PreApp">
       <StatusProvider>
         <DifficultyProvider>
-          <App />
+          <CommunicationProvider>
+            <App />
+          </CommunicationProvider>
         </DifficultyProvider>
       </StatusProvider>
 

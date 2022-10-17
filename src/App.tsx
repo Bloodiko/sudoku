@@ -5,12 +5,14 @@ import Menu from "./components/Menu";
 import Scoreboard from "./components/Scoreboard";
 import Settings from "./components/Settings";
 import { StatusContext } from "./components/statusContext";
+import { communicationContext } from "./components/ComRefContext";
 import status from './components/statusEnum';
 
 
 function App() {
 
     const { appStatus, setAppStatus } = useContext(StatusContext);
+    const { current } = useContext(communicationContext);
 
     const getCurrenView = (appStatus: status) => {
         switch (appStatus) {
@@ -32,7 +34,10 @@ function App() {
     return (
         <>
             {/* button back to menu, in-document for mobile & absolute for desktop */}
-            {appStatus !== status.MENU && <button className="backToMenuButton" onClick={() => setAppStatus(status.MENU)}>Back to menu</button>}
+            {appStatus !== status.MENU && <button className="backToMenuButton" onClick={() => {
+                current.comFunctions.call("saveGame", undefined);
+                setAppStatus(status.MENU);
+            }}>Back to menu</button>}
             {getCurrenView(appStatus)}
         </>
     );

@@ -6,6 +6,7 @@ import Numpad from './Numpad';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { GameContext } from './GameContext';
 import { Actions } from '../../types/GameDataReducerType';
+import { communicationContext } from '../ComRefContext';
 
 interface GameBoardWrapperProps {
     game: Sudoku;
@@ -20,6 +21,21 @@ const saveGame = (gamedata: GameData) => {
 
 const SaveGameButton = () => {
     const { gamedata } = useContext(GameContext);
+    const { current } = useContext(communicationContext);
+
+    useEffect(() => {
+
+        const callSaveGame = () => {
+            saveGame(gamedata);
+        }
+        window.addEventListener("beforeunload", callSaveGame);
+        current.comFunctions.register("saveGame", callSaveGame);
+
+        return () => {
+            window.removeEventListener("beforeunload", callSaveGame);
+            current.comFunctions.unregister("saveGame");
+        }
+    }, [gamedata, current.comFunctions])
 
     return (
         <button className='SaveGameButton' onClick={() => saveGame(gamedata)}>Save Game</button>
@@ -44,6 +60,7 @@ const LoadGameButton = (props: { loadRunningGame: boolean }) => {
         if (loadRunningGame) {
             loadGame();
         }
+
     }, [loadGame, loadRunningGame])
 
     return (
