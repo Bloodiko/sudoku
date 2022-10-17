@@ -56,7 +56,7 @@ const checkCompleted = (gameState: string[], game: Sudoku) => {
 
 
 const gameDataReducer = (state: GameData, action: ReducerAction) => {
-    console.log("run dispatch");
+    console.log("run dispatch with action: ", action.type);
     switch (action.type) {
         case Actions.selectCell:
             if (state.completed) {
@@ -118,6 +118,10 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
         case Actions.newGame:
             return init(action.payload)
+
+        case Actions.loadGame:
+            console.log("load game");
+            return action.payload
 
         case Actions.closeOverlay:
             return {

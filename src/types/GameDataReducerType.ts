@@ -7,6 +7,7 @@ enum Actions {
     appendLastMove,
     updateLastMoves,
     newGame,
+    loadGame,
     closeOverlay,
 }
 
@@ -29,12 +30,16 @@ type NewGameAction = {
     type: Actions.newGame,
     payload: Sudoku
 }
+type LoadGameAction = {
+    type: Actions.loadGame,
+    payload: GameData
+}
 
 type CloseOverlayAction = {
     type: Actions.closeOverlay,
 }
 
-type ReducerAction = SelectCellAction | SetCellValueAction | NewGameAction | ToggleCandidateAction | CloseOverlayAction;
+type ReducerAction = SelectCellAction | SetCellValueAction | NewGameAction | LoadGameAction | ToggleCandidateAction | CloseOverlayAction;
 
 export type { ReducerAction };
 export { Actions };
