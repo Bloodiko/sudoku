@@ -76,7 +76,7 @@ const GameBoard = (props: GameBoardProps) => {
 
             e.stopPropagation();
 
-            if (e.code === "Backspace") {
+            if (e.code === "Backspace" || e.code === "Delete") {
                 dispatch({ type: Actions.setCellValue, payload: -1 })
                 return;
             }
