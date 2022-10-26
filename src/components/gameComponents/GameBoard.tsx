@@ -5,6 +5,7 @@ import { GameContext } from "./GameContext"
 import { useContext } from "react"
 import { Actions } from "../../types/GameDataReducerType"
 import CompletedOverlay from "./CompletedOverlay"
+import { cellMapping } from "./cellMapping"
 
 interface GameBoardProps {
     game: Sudoku
@@ -35,19 +36,19 @@ const GameBoard = (props: GameBoardProps) => {
             const cellValue = game.puzzle[i];
 
             const cellNumber = i;
-            const cellRow = Math.floor(cellNumber / 9);
-            const cellColumn = cellNumber % 9;
-            const cellBox = Math.floor(cellRow / 3) * 3 + Math.floor(cellColumn / 3);
+
             const cellLocked = cellValue !== "-";
 
             cells.push(
                 <Cell
                     cell={cellNumber}
-                    row={cellRow}
-                    col={cellColumn}
-                    cube={cellBox}
+                    row={cellMapping[cellNumber].row}
+                    col={cellMapping[cellNumber].column}
+                    cube={cellMapping[cellNumber].cube}
                     locked={cellLocked}
                     value={cellValue}
+                    highlighted={gamedata.highlightCells.includes(cellNumber)}
+                    isError={gamedata.errorCells.includes(cellNumber)}
                     key={'cell' + cellNumber.toString()}
                 ></Cell>
             )

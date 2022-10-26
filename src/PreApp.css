@@ -107,6 +107,14 @@ button.numberTooMany {
   background-color: gray !important;
 }
 
+.highlighted {
+  background-color: #4db5ff;
+}
+
+.isError {
+  color: #f30d0d;
+}
+
 .cellCandidatesWrapper {
   display: grid;
   width: 100%;

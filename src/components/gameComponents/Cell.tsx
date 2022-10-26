@@ -15,6 +15,8 @@ const Cell = (props: cellProps) => {
     `col${props.col}`,
     `cube${props.cube}`,
     props.locked ? "locked" : "",
+    props.highlighted ? "highlighted" : "",
+    props.isError ? "isError" : "",
     gamedata.selectedCell === props.cell ? "selected" : "",
   ]
     .filter((entry) => entry.length > 0)

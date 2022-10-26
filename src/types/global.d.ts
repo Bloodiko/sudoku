@@ -21,6 +21,8 @@ declare global {
         col: number,
         cube: number,
         value: string,
+        highlighted: boolean,
+        isError: boolean,
     }
 
     type candidateProps = {
@@ -35,6 +37,8 @@ declare global {
         lastMoves: move[]; // temp, maybe TODO
         completed: boolean;
         completedOverlay: boolean;
+        highlightCells: number[];
+        errorCells: number[];
 
     };
 

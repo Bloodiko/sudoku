@@ -1,5 +1,6 @@
 import { Sudoku } from "sudoku-gen/dist/types/sudoku.type";
 import { Actions, ReducerAction } from "../../types/GameDataReducerType";
+import findInvalidCells from "./validateCellValues";
 
 
 let candidatesObj: candidates = {
@@ -17,8 +18,6 @@ let candidatesObj: candidates = {
 const candidateOptions = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']; // zero included to match the index of the candidate
 
 
-
-
 export const init = (game: Sudoku) => {
     console.log("init game data");
 
@@ -29,8 +28,6 @@ export const init = (game: Sudoku) => {
         candidatesArray[i] = { ...candidatesObj };
     }
 
-
-
     return {
         generatedGame: game,
         currentGameState: game.puzzle.split(''),
@@ -38,7 +35,9 @@ export const init = (game: Sudoku) => {
         candidates: candidatesArray,
         lastMoves: [],
         completed: false,
-        completedOverlay: false
+        completedOverlay: false,
+        highlightCells: [],
+        errorCells: []
     } as GameData
 }
 
@@ -59,6 +58,10 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
     console.log("run dispatch with action: ", action.type);
     switch (action.type) {
         case Actions.selectCell:
+            if (state.selectedCell === action.payload) {
+                console.log("already selected");
+                return state;
+            }
             if (state.completed) {
                 console.log("game completed");
                 return state;
@@ -73,14 +76,23 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 console.log("nothing selected, aborting")
                 return state;
             }
+            if (state.currentGameState[state.selectedCell] === action.payload.toString()) {
+                console.log("same value, aborting")
+                return state;
+            }
 
             if (action.payload === -1) {
+                if (state.currentGameState[state.selectedCell] === '-') {
+                    console.log("nothing to delete")
+                    return state;
+                }
                 // backspace
                 const newGameState = [...state.currentGameState];
                 newGameState[state.selectedCell] = "-";
                 return {
                     ...state,
-                    currentGameState: newGameState
+                    currentGameState: newGameState,
+                    errorCells: findInvalidCells(newGameState)
                 }
             }
             else {
@@ -91,12 +103,16 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 newGameState[state.selectedCell] = action.payload.toString();
 
                 const completed = checkCompleted(newGameState, state.generatedGame);
+
+
+
                 return {
                     ...state,
                     currentGameState: newGameState,
                     completed: completed,
                     completedOverlay: completed,
-                    selectedCell: null
+                    selectedCell: null,
+                    errorCells: findInvalidCells(newGameState)
                 }
             }
 
