@@ -100,20 +100,31 @@ button.numberTooMany {
 }
 
 .selected {
-  background-color: #3c4cfd;
+  background-color: #2e3ffe !important;
+  color: white !important;
 }
 
 .locked {
-  background-color: gray !important;
+  background-color: gray;
 }
 
 .highlighted {
   background-color: #4db5ff;
 }
 
+.highlighted.locked {
+  background-color: #6395b9;
+}
+
 .isError {
   color: #f30d0d;
+  background-color: #fabdbd;
 }
+
+.isError.locked {
+  background-color: #c78080;
+}
+
 
 .cellCandidatesWrapper {
   display: grid;
