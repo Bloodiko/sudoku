@@ -1,6 +1,7 @@
 import { Sudoku } from "sudoku-gen/dist/types/sudoku.type";
 import { Actions, ReducerAction } from "../../types/GameDataReducerType";
 import findInvalidCells from "./validateCellValues";
+import highlightCells from "./highlightCellsOnSelect";
 
 
 let candidatesObj: candidates = {
@@ -68,6 +69,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
             }
             return {
                 ...state,
+                highlightCells: highlightCells(action.payload),
                 selectedCell: action.payload
             }
         case Actions.setCellValue:
@@ -112,6 +114,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                     completed: completed,
                     completedOverlay: completed,
                     selectedCell: null,
+                    highlightCells: [],
                     errorCells: findInvalidCells(newGameState)
                 }
             }
