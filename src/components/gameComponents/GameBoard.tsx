@@ -8,7 +8,8 @@ import CompletedOverlay from "./CompletedOverlay"
 import { cellMapping } from "./cellMapping"
 
 interface GameBoardProps {
-    game: Sudoku
+    game: Sudoku,
+    paused: Boolean
 }
 
 const validCodes = [
@@ -100,7 +101,7 @@ const GameBoard = (props: GameBoardProps) => {
 
     return (
         <div className="gameBoard">
-            {buildGameBoard(props.game)}
+            {!props.paused ? buildGameBoard(props.game) : <div className="paused">Paused</div>}
 
             {gamedata.completed && gamedata.completedOverlay && <CompletedOverlay />}
         </div>

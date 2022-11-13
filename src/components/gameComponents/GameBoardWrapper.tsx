@@ -7,6 +7,8 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { GameContext } from './GameContext';
 import { Actions } from '../../types/GameDataReducerType';
 import { communicationContext } from '../ComRefContext';
+import Timer from './Timer';
+import EventHandler from '../EventHandler';
 
 interface GameBoardWrapperProps {
     game: Sudoku;
@@ -70,14 +72,38 @@ const LoadGameButton = (props: { loadRunningGame: boolean }) => {
 
 
 const GameBoardWrapper = (props: GameBoardWrapperProps) => {
+    const [paused, setPaused] = useState(false);
+
+    const { current } = useContext(communicationContext);
+
+    useEffect(() => {
+        const callPause = (e: any) => {
+            console.log(e)
+            setPaused(true);
+        }
+        const callResume = () => {
+            setPaused(false);
+        }
+        current.comFunctions.register("pause", callPause);
+        current.comFunctions.register("resume", callResume);
+
+        return () => {
+            current.comFunctions.unregister("pause");
+            current.comFunctions.unregister("resume");
+        }
+    }, [current.comFunctions])
+
 
     return (
         <GameProvider game={props.game}>
+            <EventHandler id="PauseHandler" eventlist={[{ name: "PauseGame", callback: () => setPaused(true) }, { name: "ResumeGame", callback: () => setPaused(false) }]} />
             <div className='gameActions'>
-                <SaveGameButton />
+                <SaveGameButton />&nbsp;
                 <LoadGameButton loadRunningGame={props.loadRunningGame} />
+                <br />
+                <Timer paused={paused} />
             </div>
-            <GameBoard game={props.game} />
+            <GameBoard paused={paused} game={props.game} />
             <Numpad />
         </GameProvider>
     )

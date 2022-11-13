@@ -136,6 +136,13 @@ button.numberTooMany {
   font-size: 0.5em;
 }
 
+.paused {
+  background-color: gray;
+  height: 46vh;
+  width: 46vh;
+  border: 5px solid black;
+}
+
 .completedOverlay {
   position: absolute;
   top: 0;
