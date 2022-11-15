@@ -27,11 +27,22 @@ const CommunicationProvider = (props: { children: any }) => {
             }
         }
 
+        const callWithReturn = (name: string, data: any) => {
+            console.log("calling with return: ", name);
+            if (communicationRef.current.registry[name]) {
+                return communicationRef.current.registry[name](data);
+            }
+            else {
+                console.log(`No function registered with name ${name}`);
+            }
+        }
+
         communicationRef.current = {
             comFunctions: {
                 register,
                 unregister,
-                call
+                call,
+                callWithReturn
             },
             registry: {}
         }

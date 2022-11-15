@@ -10,7 +10,6 @@ const getTimeString = (time: number) => {
 
 
 const Timer = (props: { paused: Boolean }) => {
-    console.log("Timer rerendered");
     const [gametime, setGameTime] = useState(0);
     const { current } = useContext(communicationContext);
 
@@ -58,6 +57,21 @@ const Timer = (props: { paused: Boolean }) => {
             stopTimer();
         }
     }
+
+    useEffect(() => {
+        // register getter for current time
+        current.comFunctions.register("getCurrentTime", () => {
+            let time;
+            setGameTime((currentGameTime) => {
+                getTimeString(currentGameTime)
+                time = currentGameTime;
+                return currentGameTime;
+            }
+            );
+            return time;
+        });
+    }, [current.comFunctions])
+
 
 
     return (
