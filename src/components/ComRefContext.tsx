@@ -8,16 +8,22 @@ const CommunicationProvider = (props: { children: any }) => {
 
     useEffect(() => {
         const register = (name: string, callback: (data: any) => void) => {
+            console.log("registering: ", name);
             communicationRef.current.registry[name] = callback;
         }
 
         const unregister = (name: string) => {
+            console.log("unregistering: ", name);
             delete communicationRef.current.registry[name];
         }
 
         const call = (name: string, data: any) => {
+            console.log("calling: ", name);
             if (communicationRef.current.registry[name]) {
                 communicationRef.current.registry[name](data);
+            }
+            else {
+                console.log(`No function registered with name ${name}`);
             }
         }
 
@@ -30,6 +36,11 @@ const CommunicationProvider = (props: { children: any }) => {
             registry: {}
         }
     }, [])
+
+    useEffect(() => {
+        console.log("communication context updated");
+        //eslint-disable-next-line
+    }, [communicationRef.current])
 
     return (
         <communicationContext.Provider value={communicationRef}>

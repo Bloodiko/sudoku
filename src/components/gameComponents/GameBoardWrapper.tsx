@@ -8,7 +8,6 @@ import { GameContext } from './GameContext';
 import { Actions } from '../../types/GameDataReducerType';
 import { communicationContext } from '../ComRefContext';
 import Timer from './Timer';
-import EventHandler from '../EventHandler';
 
 interface GameBoardWrapperProps {
     game: Sudoku;
@@ -72,13 +71,13 @@ const LoadGameButton = (props: { loadRunningGame: boolean }) => {
 
 
 const GameBoardWrapper = (props: GameBoardWrapperProps) => {
+    console.log("GameBoardWrapper rerendered");
     const [paused, setPaused] = useState(false);
 
     const { current } = useContext(communicationContext);
 
     useEffect(() => {
-        const callPause = (e: any) => {
-            console.log(e)
+        const callPause = () => {
             setPaused(true);
         }
         const callResume = () => {
@@ -96,7 +95,6 @@ const GameBoardWrapper = (props: GameBoardWrapperProps) => {
 
     return (
         <GameProvider game={props.game}>
-            <EventHandler id="PauseHandler" eventlist={[{ name: "PauseGame", callback: () => setPaused(true) }, { name: "ResumeGame", callback: () => setPaused(false) }]} />
             <div className='gameActions'>
                 <SaveGameButton />&nbsp;
                 <LoadGameButton loadRunningGame={props.loadRunningGame} />

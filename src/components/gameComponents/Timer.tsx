@@ -1,5 +1,6 @@
-import React from "react";
-import { useState, useEffect } from 'react';
+import React, { useCallback } from "react";
+import { useState, useEffect, useContext } from 'react';
+import { communicationContext } from "../ComRefContext";
 
 const getTimeString = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -9,37 +10,46 @@ const getTimeString = (time: number) => {
 
 
 const Timer = (props: { paused: Boolean }) => {
+    console.log("Timer rerendered");
     const [gametime, setGameTime] = useState(0);
-
+    const { current } = useContext(communicationContext);
 
     const intervalRef = React.useRef<number | null>(null);
 
+    const initInterval = useCallback(() => {
+        intervalRef.current = window.setInterval(() => {
+            setGameTime((currentGameTime) => currentGameTime + 1);
+        }, 1000);
+    }, [])
+
+    const removeInterval = useCallback(() => {
+        if (intervalRef.current) {
+            window.clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    }, [])
+
     const startTimer = () => {
         console.log("start timer");
-        intervalRef.current = window.setInterval(() => {
-            setGameTime((prevTime) => prevTime + 1);
-        }, 1000);
-        //document.dispatchEvent(new CustomEvent("ResumeGame")); // Not Clean - All events should be sended where they are needed
-        document.getElementById("PauseHandler")?.dispatchEvent(new CustomEvent("ResumeGame"));
-
+        initInterval();
+        current.comFunctions.call("resume");
     }
 
     const stopTimer = () => {
         console.log("stop timer");
         if (intervalRef.current !== null) {
-            clearInterval(intervalRef.current);
+            removeInterval();
             intervalRef.current = null;
-            //document.dispatchEvent(new CustomEvent("PauseGame")); // Not Clean - All events should be sended where they are needed
-            document.getElementById("PauseHandler")?.dispatchEvent(new CustomEvent("PauseGame"));
+            current.comFunctions.call("pause");
         }
     }
 
     useEffect(() => {
-        startTimer();
+        initInterval();
         return () => {
-            stopTimer();
+            removeInterval();
         }
-    }, [])
+    }, [initInterval, removeInterval])
 
     const toggleTimer = () => {
         if (intervalRef.current === null) {
