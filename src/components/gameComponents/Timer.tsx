@@ -59,24 +59,51 @@ const Timer = (props: { paused: Boolean }) => {
     }
 
     useEffect(() => {
-        // register getter for current time
-        current.comFunctions.register("getCurrentTime", () => {
+
+        function getTime() {
             let time;
             setGameTime((currentGameTime) => {
-                getTimeString(currentGameTime)
+                console.log("currentGameTime ", currentGameTime);
                 time = currentGameTime;
                 return currentGameTime;
             }
             );
+
+            console.log("time: ", time);
             return time;
-        });
+        }
+
+        function loadTime() {
+            const time = localStorage.getItem("currentGameTime");
+            if (time) {
+                setGameTime(parseInt(time));
+            }
+        }
+
+        function saveTime() {
+            const time = current.comFunctions.callWithReturn("getCurrentTime");
+            if (time) {
+                localStorage.setItem("currentGameTime", time.toString());
+            }
+        }
+
+        // register getter for current time
+        current.comFunctions.register("getCurrentTime", getTime);
+        current.comFunctions.register("loadTime", loadTime);
+        current.comFunctions.register("saveTime", saveTime);
+
+        return () => {
+            current.comFunctions.unregister("getCurrentTime");
+            current.comFunctions.unregister("loadTime");
+            current.comFunctions.unregister("saveTime");
+        }
     }, [current.comFunctions])
 
 
 
     return (
         <div className='Timer'>
-            {getTimeString(gametime)}
+            {getTimeString(gametime)}&nbsp;
             {/* Pause Button */}
             <button onClick={() => { toggleTimer() }}>{!props.paused ? "Pause" : "Resume"}</button>
         </div>

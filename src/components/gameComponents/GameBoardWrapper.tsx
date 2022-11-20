@@ -24,11 +24,13 @@ const SaveGameButton = () => {
     const { gamedata } = useContext(GameContext);
     const { current } = useContext(communicationContext);
 
+    const callSaveGame = useCallback(() => {
+        current.comFunctions.call("saveTime");
+        saveGame(gamedata);
+    }, [current.comFunctions, gamedata]);
+
     useEffect(() => {
 
-        const callSaveGame = () => {
-            saveGame(gamedata);
-        }
         window.addEventListener("beforeunload", callSaveGame);
         current.comFunctions.register("saveGame", callSaveGame);
 
@@ -36,33 +38,38 @@ const SaveGameButton = () => {
             window.removeEventListener("beforeunload", callSaveGame);
             current.comFunctions.unregister("saveGame");
         }
-    }, [gamedata, current.comFunctions])
+    }, [current.comFunctions, callSaveGame])
 
     return (
-        <button className='SaveGameButton' onClick={() => saveGame(gamedata)}>Save Game</button>
+        <button className='SaveGameButton' onClick={() => callSaveGame()}>Save Game</button>
     )
 }
 
 const LoadGameButton = (props: { loadRunningGame: boolean }) => {
     // loadRunningGame is only for auto loading
     const { dispatch } = useContext(GameContext);
+    const { current } = useContext(communicationContext);
 
     // state to keep track of when the game was loaded last
     const [loadRunningGame, setLoadRunningGame] = useState(props.loadRunningGame);
 
     const loadGame = useCallback(() => {
-        const gameData = JSON.parse(localStorage.getItem("currentGameData") || "{}");
-        dispatch({ type: Actions.loadGame, payload: gameData });
+        const gameData = localStorage.getItem("currentGameData");
+        if (!gameData) {
+            return;
+        }
+        current.comFunctions.call("loadTime");
+        dispatch({ type: Actions.loadGame, payload: JSON.parse(gameData) });
         setLoadRunningGame(false);
         // at this point game is loaded. This is to prevent the game from being loaded again when the component rerenders unless the user clicks the button again
-    }, [dispatch])
+    }, [dispatch, current.comFunctions]);
 
     useEffect(() => {
         if (loadRunningGame) {
             loadGame();
         }
 
-    }, [loadGame, loadRunningGame])
+    }, [loadGame, loadRunningGame, current.comFunctions])
 
     return (
         <button className='LoadGameButton' onClick={loadGame}>Load Game</button>
@@ -96,10 +103,12 @@ const GameBoardWrapper = (props: GameBoardWrapperProps) => {
     return (
         <GameProvider game={props.game}>
             <div className='gameActions'>
+
+                <Timer paused={paused} />
+                <br />
                 <SaveGameButton />&nbsp;
                 <LoadGameButton loadRunningGame={props.loadRunningGame} />
-                <br />
-                <Timer paused={paused} />
+
             </div>
             <GameBoard paused={paused} game={props.game} />
             <Numpad />
