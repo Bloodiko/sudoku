@@ -100,8 +100,8 @@ button.numberTooMany {
 }
 
 .selected {
-  background-color: #2e3ffe !important;
-  color: white !important;
+  background-color: #9cbcf9 !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 .locked {
@@ -109,20 +109,20 @@ button.numberTooMany {
 }
 
 .highlighted {
-  background-color: #4db5ff;
+  background-color: #d8efff;
 }
 
 .highlighted.locked {
-  background-color: #6395b9;
+  background-color: #7e91a0;
 }
 
 .isError {
   color: #f30d0d;
-  background-color: #fabdbd;
+  background-color: #ffc6c6;
 }
 
 .isError.locked {
-  background-color: #c78080;
+  background-color: #ff8888;
 }
 
 
