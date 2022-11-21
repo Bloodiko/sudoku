@@ -9,7 +9,7 @@ import { gametimeString } from "../../state/TimerState"
 
 const CompletedOverlay = () => {
 
-    const { dispatch } = useContext(GameContext);
+    const { gamedata, dispatch } = useContext(GameContext);
 
     confetti();
 
@@ -30,6 +30,14 @@ const CompletedOverlay = () => {
                 <div>
                     You solved the puzzle in <span>{gametimeString.get()}</span>.
                 </div>
+
+                <input onSubmit={() => {
+
+                }}
+                    type="text"
+                    placeholder="Enter your name">
+                </input>
+
             </div>
 
             <button className="closeOverlayButton" onClick={() => dispatch({ type: Actions.closeOverlay })}>Close</button>
