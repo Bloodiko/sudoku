@@ -1,23 +1,20 @@
 import React, { useCallback } from "react";
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { communicationContext } from "../ComRefContext";
-
-const getTimeString = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-}
-
+import { gametime, gametimeString } from "../../state/TimerState";
+import { useStore } from "@nanostores/react";
 
 const Timer = (props: { paused: Boolean }) => {
-    const [gametime, setGameTime] = useState(0);
+
+    const timeString = useStore(gametimeString);
+
     const { current } = useContext(communicationContext);
 
     const intervalRef = React.useRef<number | null>(null);
 
     const initInterval = useCallback(() => {
         intervalRef.current = window.setInterval(() => {
-            setGameTime((currentGameTime) => currentGameTime + 1);
+            gametime.set(gametime.get() + 1);
         }, 1000);
     }, [])
 
@@ -61,22 +58,13 @@ const Timer = (props: { paused: Boolean }) => {
     useEffect(() => {
 
         function getTime() {
-            let time;
-            setGameTime((currentGameTime) => {
-                console.log("currentGameTime ", currentGameTime);
-                time = currentGameTime;
-                return currentGameTime;
-            }
-            );
-
-            console.log("time: ", time);
-            return time;
+            return gametime.get();
         }
 
         function loadTime() {
             const time = localStorage.getItem("currentGameTime");
             if (time) {
-                setGameTime(parseInt(time));
+                gametime.set(parseInt(time));
             }
         }
 
@@ -103,7 +91,7 @@ const Timer = (props: { paused: Boolean }) => {
 
     return (
         <div className='Timer'>
-            {getTimeString(gametime)}&nbsp;
+            {timeString}&nbsp;
             {/* Pause Button */}
             <button onClick={() => { toggleTimer() }}>{!props.paused ? "Pause" : "Resume"}</button>
         </div>

@@ -1,18 +1,15 @@
-import React from "react"
-
 import { GameContext } from "./GameContext"
 import { useContext } from "react"
 import { Actions } from "../../types/GameDataReducerType"
-import { communicationContext } from "../ComRefContext"
 import confetti from "canvas-confetti"
 
+import { gametimeString } from "../../state/TimerState"
 
 // game CompletedOverlay 
 
 const CompletedOverlay = () => {
 
     const { dispatch } = useContext(GameContext);
-    const { current } = useContext(communicationContext);
 
     confetti();
 
@@ -31,7 +28,7 @@ const CompletedOverlay = () => {
             >
                 <p>Game Completed!</p>
                 <div>
-                    You solved the puzzle in <span>{current.comFunctions.callWithReturn("getCurrentTime")}</span> seconds.
+                    You solved the puzzle in <span>{gametimeString.get()}</span>.
                 </div>
             </div>
 
