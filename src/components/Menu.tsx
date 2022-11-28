@@ -26,6 +26,7 @@ const Menu = () => {
             }
             }>Continue Game</button>}
             <button onClick={() => { changeStatus(status.DIFFICULTY) }} >Start Sudoku Game</button>
+            <button onClick={() => { changeStatus(status.SCOREBOARD) }}>Highscores</button>
         </>
     );
 }
