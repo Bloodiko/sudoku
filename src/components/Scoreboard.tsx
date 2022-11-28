@@ -22,6 +22,11 @@ const Scoreboard = () => {
     const [showDifficulty, setShowDifficulty] = useState("easy" as Difficulty)
 
     const recordList = (difficulty: Difficulty) => {
+
+        if (records[difficulty].length === 0) {
+            return <tr><td></td><td>No Records yet.</td></tr>
+        }
+
         return records[difficulty].map((record: { name: string, time: number }, index: number) => {
             return (
                 <tr key={index}>
