@@ -17,6 +17,8 @@ import { useState } from 'react';
 import { getSudoku } from 'sudoku-gen';
 import GameBoardWrapper from './gameComponents/GameBoardWrapper';
 
+import { gametime } from '../state/TimerState';
+
 
 //convert difficulty enum to sudoku-gen difficulty -> is there an easier way?
 const genDiff = (diff: diffEnum): Difficulty | undefined => {
@@ -36,6 +38,8 @@ const genDiff = (diff: diffEnum): Difficulty | undefined => {
 
 const Game = () => {
     const { gamedifficulty } = useContext(DifficultyContext);
+
+    gametime.set(0);
 
     const [game, setGame] = useState(undefined as Sudoku | undefined);
     console.log('rerender game')
