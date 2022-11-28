@@ -4,7 +4,7 @@ import findInvalidCells from "./validateCellValues";
 import highlightCells from "./highlightCellsOnSelect";
 
 
-let candidatesObj: candidates = {
+const candidatesObj: candidates = {
     'one': false,
     'two': false,
     'three': false,
@@ -38,7 +38,8 @@ export const init = (game: Sudoku) => {
         completed: false,
         completedOverlay: false,
         highlightCells: [],
-        errorCells: []
+        errorCells: [],
+        errorCandidates: {}
     } as GameData
 }
 

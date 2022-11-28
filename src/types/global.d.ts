@@ -39,6 +39,7 @@ declare global {
         completedOverlay: boolean;
         highlightCells: number[];
         errorCells: number[];
+        errorCandidates: { [key: number]: candidates };
 
     };
 
