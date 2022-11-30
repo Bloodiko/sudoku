@@ -20,13 +20,13 @@ const Menu = () => {
     return (
         <>
             <h1>Menu</h1>
-            {gameRunning && <button onClick={() => {
+            {gameRunning && <button className="menu" onClick={() => {
                 setDifficulty(diffEnum.CONTINUE)
                 changeStatus(status.GAME)
             }
             }>Continue Game</button>}
-            <button onClick={() => { changeStatus(status.DIFFICULTY) }} >Start Sudoku Game</button>
-            <button onClick={() => { changeStatus(status.SCOREBOARD) }}>Highscores</button>
+            <button className="menu" onClick={() => { changeStatus(status.DIFFICULTY) }} >Start Sudoku Game</button>
+            <button className="menu" onClick={() => { changeStatus(status.SCOREBOARD) }}>Highscores</button>
         </>
     );
 }

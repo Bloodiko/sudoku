@@ -88,6 +88,21 @@ button.numberTooMany {
   margin-bottom: 1em;
 }
 
+button.menu {
+  background-color: #f1f1f1;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  margin: 0.1em;
+}
+
 .cell {
   width: 5vh;
   height: 5vh;
