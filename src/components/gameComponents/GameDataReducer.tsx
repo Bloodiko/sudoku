@@ -92,10 +92,12 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 // backspace
                 const newGameState = [...state.currentGameState];
                 newGameState[state.selectedCell] = "-";
+                const [invalidCells, invalidCandidates] = findInvalidCells(newGameState, state.candidates);
                 return {
                     ...state,
                     currentGameState: newGameState,
-                    errorCells: findInvalidCells(newGameState)
+                    errorCells: invalidCells,
+                    errorCandidates: invalidCandidates,
                 }
             }
             else {
@@ -107,7 +109,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
                 const completed = checkCompleted(newGameState, state.generatedGame);
 
-
+                const [invalidCells, invalidCandidates] = findInvalidCells(newGameState, state.candidates);
 
                 return {
                     ...state,
@@ -116,7 +118,8 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                     completedOverlay: completed,
                     selectedCell: null,
                     highlightCells: [],
-                    errorCells: findInvalidCells(newGameState)
+                    errorCells: invalidCells,
+                    errorCandidates: invalidCandidates
                 }
             }
 
@@ -125,6 +128,9 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 console.log("nothing selected, aborting")
                 return state;
             }
+
+            const [invalidCells, invalidCandidates] = findInvalidCells(state.currentGameState, state.candidates);
+
             return {
                 ...state,
                 candidates: {
@@ -133,7 +139,9 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                         ...state.candidates[state.selectedCell],
                         [candidateOptions[action.payload]]: !state.candidates[state.selectedCell][candidateOptions[action.payload]]
                     }
-                }
+                },
+                errorCells: invalidCells,
+                errorCandidates: invalidCandidates,
             }
 
         case Actions.newGame:

@@ -141,6 +141,10 @@ button.menu {
   background-color: #ff8888;
 }
 
+.isCandidateError {
+  color: #f30d0d;
+}
+
 
 .cellCandidatesWrapper {
   display: grid;
