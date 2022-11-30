@@ -76,6 +76,23 @@ const LoadGameButton = (props: { loadRunningGame: boolean }) => {
     )
 }
 
+const DeselectButton = ({ paused }: { paused: boolean }) => {
+    const { dispatch } = useContext(GameContext);
+
+    const handleClick = () => {
+        dispatch({ type: Actions.selectCell, payload: -1 })
+    }
+
+    useEffect(() => {
+        paused && dispatch({ type: Actions.selectCell, payload: -1 });
+    }, [paused, dispatch])
+
+    return (
+        <button className='DeselectButton' onClick={handleClick}>Deselect</button>
+    )
+
+}
+
 
 const GameBoardWrapper = (props: GameBoardWrapperProps) => {
     console.log("GameBoardWrapper rerendered");
@@ -112,6 +129,7 @@ const GameBoardWrapper = (props: GameBoardWrapperProps) => {
             </div>
             <GameBoard paused={paused} game={props.game} />
             <Numpad />
+            <DeselectButton paused={paused} />
         </GameProvider>
     )
 }

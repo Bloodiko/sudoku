@@ -3,7 +3,7 @@ import { cellMapping, columnCells, cubeCells, rowCells } from "./cellMapping";
 
 
 const highlightCells = (selectedCell: number | null) => {
-    if (selectedCell === null) {
+    if (selectedCell === null || selectedCell === -1) {
         return [];
     }
 
