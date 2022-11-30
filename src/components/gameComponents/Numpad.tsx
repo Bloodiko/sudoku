@@ -101,6 +101,7 @@ const Numpad = () => {
                 {useCandidatesNumpad && numpad.map((num) => (
                     <CandidateButton key={num} num={num} onClick={handleClickCandidate} />
                 ))}
+                <button onClick={() => dispatch({ type: Actions.setCellValue, payload: -1 })} > X </button>
 
             </div>
             <ToolbarToggleNumpadButton isCandidatesNumpadUsed={useCandidatesNumpad} onClick={() => setUseCandidatesNumpad(!useCandidatesNumpad)} />

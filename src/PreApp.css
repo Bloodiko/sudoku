@@ -3,6 +3,7 @@
   flex-flow: column nowrap;
   align-items: center;
   text-align: center;
+  margin: 10px;
 }
 
 .diffDiv {
