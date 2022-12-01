@@ -68,11 +68,15 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 console.log("game completed");
                 return state;
             }
-            return {
+
+            const newStateSelectCell = {
                 ...state,
                 highlightCells: highlightCells(action.payload),
                 selectedCell: action.payload
             }
+
+            return newStateSelectCell;
+
         case Actions.setCellValue:
 
             if (state.selectedCell === null) {
@@ -93,12 +97,13 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 const newGameState = [...state.currentGameState];
                 newGameState[state.selectedCell] = "-";
                 const [invalidCells, invalidCandidates] = findInvalidCells(newGameState, state.candidates);
-                return {
+                const newStateCellValue = {
                     ...state,
                     currentGameState: newGameState,
                     errorCells: invalidCells,
                     errorCandidates: invalidCandidates,
                 }
+                return newStateCellValue;
             }
             else {
                 if (!isValidNumber(action.payload)) {
@@ -111,7 +116,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
                 const [invalidCells, invalidCandidates] = findInvalidCells(newGameState, state.candidates);
 
-                return {
+                const newStateCellValue = {
                     ...state,
                     currentGameState: newGameState,
                     completed: completed,
@@ -121,6 +126,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                     errorCells: invalidCells,
                     errorCandidates: invalidCandidates
                 }
+                return newStateCellValue;
             }
 
         case Actions.toggleCandidate:
@@ -131,7 +137,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
             const [invalidCells, invalidCandidates] = findInvalidCells(state.currentGameState, state.candidates);
 
-            return {
+            const newStateToggleCandidate = {
                 ...state,
                 candidates: {
                     ...state.candidates,
@@ -143,6 +149,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 errorCells: invalidCells,
                 errorCandidates: invalidCandidates,
             }
+            return newStateToggleCandidate;
 
         case Actions.newGame:
             return init(action.payload)

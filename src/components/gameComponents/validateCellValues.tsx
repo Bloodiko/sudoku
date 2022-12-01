@@ -33,7 +33,7 @@ const validate = (toCheck: toCheckArray) => { // row, column or box
     return [invalidCells, invalidCandidates];
 }
 
-const findInvalidCells = (currentGameState: string[], candidates: candidates[]) => {
+function findInvalidCells(currentGameState: string[], candidates: candidates[]): [number[], errorCandidates] {
     // return invalid cell numbers
     let invalidCells: number[] = [];
     let invalidCandidates: { [key: number]: number[] } = {};
