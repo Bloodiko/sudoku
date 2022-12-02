@@ -3,15 +3,27 @@ import { rowCells, columnCells, cubeCells } from "./cellMapping";
 type toCheckArray = cell[]
 type cell = { value: string, cellnumber: number, candidates: candidates }
 
+const candidateMap: { [key: string]: string } = {
+    'one': "1",
+    'two': "2",
+    'three': "3",
+    'four': "4",
+    'five': "5",
+    'six': "6",
+    'seven': "7",
+    'eight': "8",
+    'nine': "9"
+}
+
 
 /* 
     Gets an array of 9 cells to check and returns an array of invalid cells.
     since the check is always the same, we can use the same function for rows, columns and cubes.
 */
-const validate = (toCheck: toCheckArray) => { // row, column or box
-    let tmp: { [key: string]: cell } = {};
+function validate(toCheck: toCheckArray): [number[], errorCandidates] { // row, column or box
+    let tmpCells: { [key: string]: cell } = {};
     let invalidCells: number[] = [];
-    let invalidCandidates: { [key: number]: number[] } = {};
+    let invalidCandidates: errorCandidates = {};
 
     for (let i = 0; i < toCheck.length; i++) {
         const element = toCheck[i];
@@ -19,16 +31,29 @@ const validate = (toCheck: toCheckArray) => { // row, column or box
             continue;
         }
         // passing the value as key to the object, if it already exists, we have a duplicate
-        if (tmp[element.value] === undefined) {
-            tmp[element.value] = element;
+        if (tmpCells[element.value] === undefined) {
+            tmpCells[element.value] = element;
         }
         else {
-            invalidCells.push(tmp[element.value].cellnumber);
+            invalidCells.push(tmpCells[element.value].cellnumber);
             invalidCells.push(element.cellnumber);
         }
     }
+    // run again for candidate cecking
 
-
+    for (let i = 0; i < toCheck.length; i++) {
+        const element = toCheck[i];
+        if (element.value === "-") {
+            // check candidates
+            Object.keys(element.candidates).forEach((key) => {
+                if (element.candidates[key] && tmpCells[candidateMap[key]]) {
+                    // Candidate <-> Value conflict
+                    invalidCells.push(tmpCells[candidateMap[key]].cellnumber);
+                    invalidCandidates[element.cellnumber] = [...invalidCandidates[element.cellnumber] || [], Number(candidateMap[key])];
+                }
+            });
+        }
+    }
 
     return [invalidCells, invalidCandidates];
 }
@@ -47,8 +72,8 @@ function findInvalidCells(currentGameState: string[], candidates: candidates[]):
             toCheck.push({ value: currentGameState[cellnumber], cellnumber, candidates: candidates[cellnumber] });
         }
         const [invalidRowCells, invalidRowCandidates] = validate(toCheck);
-        invalidCells = [...invalidCells, ...invalidRowCells as number[]];
-        invalidCandidates = { ...invalidCandidates, ...invalidRowCandidates as { [key: number]: number[] } };
+        invalidCells = [...invalidCells, ...invalidRowCells];
+        invalidCandidates = { ...invalidCandidates, ...invalidRowCandidates };
     }
 
     // check columns
@@ -59,9 +84,9 @@ function findInvalidCells(currentGameState: string[], candidates: candidates[]):
             const cellnumber = column[j];
             toCheck.push({ value: currentGameState[cellnumber], cellnumber, candidates: candidates[cellnumber] });
         }
-        const [invalidRowCells, invalidRowCandidates] = validate(toCheck);
-        invalidCells = [...invalidCells, ...invalidRowCells as number[]];
-        invalidCandidates = { ...invalidCandidates, ...invalidRowCandidates as { [key: number]: number[] } };
+        const [invalidColCells, invalidColCandidates] = validate(toCheck);
+        invalidCells = [...invalidCells, ...invalidColCells];
+        invalidCandidates = { ...invalidCandidates, ...invalidColCandidates };
     }
 
     // check cubes
@@ -72,9 +97,9 @@ function findInvalidCells(currentGameState: string[], candidates: candidates[]):
             const cellnumber = cube[j];
             toCheck.push({ value: currentGameState[cellnumber], cellnumber, candidates: candidates[cellnumber] });
         }
-        const [invalidRowCells, invalidRowCandidates] = validate(toCheck);
-        invalidCells = [...invalidCells, ...invalidRowCells as number[]];
-        invalidCandidates = { ...invalidCandidates, ...invalidRowCandidates as { [key: number]: number[] } };
+        const [invalidCubeCells, invalidCubeCandidates] = validate(toCheck);
+        invalidCells = [...invalidCells, ...invalidCubeCells];
+        invalidCandidates = { ...invalidCandidates, ...invalidCubeCandidates };
     }
     return [invalidCells, invalidCandidates];
 }
