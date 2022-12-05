@@ -2,6 +2,7 @@ import { Sudoku } from "sudoku-gen/dist/types/sudoku.type";
 import { Actions, ReducerAction } from "../../types/GameDataReducerType";
 import findInvalidCells from "./validateCellValues";
 import highlightCells from "./highlightCellsOnSelect";
+import { cellMapping, columnCells, cubeCells, rowCells } from "./cellMapping";
 
 
 const candidatesObj: candidates = {
@@ -126,7 +127,19 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
                 const completed = checkCompleted(newGameState, state.generatedGame);
 
-                const [invalidCells, invalidCandidates] = findInvalidCells(newGameState, state.candidates);
+                // check row, column, box for candidates that are not possible anymore
+                const newCandidates = [...state.candidates];
+                const row = cellMapping[state.selectedCell].row;
+                const column = cellMapping[state.selectedCell].column;
+                const cube = cellMapping[state.selectedCell].cube;
+
+                for (let i = 0; i < 9; i++) {
+                    newCandidates[rowCells[row][i]] = { ...newCandidates[rowCells[row][i]], [candidateOptions[action.payload]]: false };
+                    newCandidates[columnCells[column][i]] = { ...newCandidates[columnCells[column][i]], [candidateOptions[action.payload]]: false };
+                    newCandidates[cubeCells[cube][i]] = { ...newCandidates[cubeCells[cube][i]], [candidateOptions[action.payload]]: false };
+                }
+
+                const [invalidCells, invalidCandidates] = findInvalidCells(newGameState, newCandidates);
 
                 const newStateCellValue = {
                     ...state,
@@ -134,6 +147,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                     completed: completed,
                     completedOverlay: completed,
                     selectedCell: null,
+                    candidates: newCandidates,
                     highlightCells: [],
                     errorCells: invalidCells,
                     errorCandidates: invalidCandidates
