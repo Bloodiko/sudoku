@@ -16,6 +16,18 @@ const candidatesObj: candidates = {
     'nine': false,
 };
 
+const reverseCandidatesObj = {
+    'one': true,
+    'two': true,
+    'three': true,
+    'four': true,
+    'five': true,
+    'six': true,
+    'seven': true,
+    'eight': true,
+    'nine': true,
+}
+
 const candidateOptions = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']; // zero included to match the index of the candidate
 
 
@@ -135,8 +147,6 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                 return state;
             }
 
-
-
             const newStateToggleCandidate = {
                 ...state,
                 candidates: {
@@ -154,6 +164,43 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
 
             return newStateToggleCandidate;
+
+        case Actions.fillCandidates:
+
+            let allTrueCandidates = new Array(81).fill(null);
+            for (let i = 0; i < 81; i++) {
+                allTrueCandidates[i] = { ...reverseCandidatesObj };
+            }
+
+            const [, invalidCandidatesFillCandidates] = findInvalidCells(state.currentGameState, allTrueCandidates);
+
+            let newCandidates = new Array(81).fill(null);
+            for (let i = 0; i < 81; i++) {
+                newCandidates[i] = { ...candidatesObj };
+                if (invalidCandidatesFillCandidates[i] !== undefined) {
+                    invalidCandidatesFillCandidates[i].includes(1) ? newCandidates[i].one = false : newCandidates[i].one = true;
+                    invalidCandidatesFillCandidates[i].includes(2) ? newCandidates[i].two = false : newCandidates[i].two = true;
+                    invalidCandidatesFillCandidates[i].includes(3) ? newCandidates[i].three = false : newCandidates[i].three = true;
+                    invalidCandidatesFillCandidates[i].includes(4) ? newCandidates[i].four = false : newCandidates[i].four = true;
+                    invalidCandidatesFillCandidates[i].includes(5) ? newCandidates[i].five = false : newCandidates[i].five = true;
+                    invalidCandidatesFillCandidates[i].includes(6) ? newCandidates[i].six = false : newCandidates[i].six = true;
+                    invalidCandidatesFillCandidates[i].includes(7) ? newCandidates[i].seven = false : newCandidates[i].seven = true;
+                    invalidCandidatesFillCandidates[i].includes(8) ? newCandidates[i].eight = false : newCandidates[i].eight = true;
+                    invalidCandidatesFillCandidates[i].includes(9) ? newCandidates[i].nine = false : newCandidates[i].nine = true;
+                }
+            }
+
+            const [invalidCellsFillCandidates, invalidCandidatesFillCandidates2] = findInvalidCells(state.currentGameState, newCandidates);
+
+            const newStateFillCandidates = {
+                ...state,
+                candidates: newCandidates,
+                errorCells: invalidCellsFillCandidates,
+                errorCandidates: invalidCandidatesFillCandidates2
+            }
+
+            return newStateFillCandidates;
+
 
         case Actions.newGame:
             return init(action.payload)

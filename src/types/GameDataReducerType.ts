@@ -4,6 +4,7 @@ enum Actions {
     selectCell,
     setCellValue,
     toggleCandidate,
+    fillCandidates,
     appendLastMove,
     updateLastMoves,
     newGame,
@@ -39,7 +40,18 @@ type CloseOverlayAction = {
     type: Actions.closeOverlay,
 }
 
-type ReducerAction = SelectCellAction | SetCellValueAction | NewGameAction | LoadGameAction | ToggleCandidateAction | CloseOverlayAction;
+type FillCandidatesAction = {
+    type: Actions.fillCandidates,
+}
+
+type ReducerAction =
+    SelectCellAction |
+    SetCellValueAction |
+    NewGameAction |
+    LoadGameAction |
+    ToggleCandidateAction |
+    CloseOverlayAction |
+    FillCandidatesAction;
 
 export type { ReducerAction };
 export { Actions };

@@ -93,6 +93,17 @@ const DeselectButton = ({ paused }: { paused: boolean }) => {
 
 }
 
+const FillCandidatesButton = () => {
+    const { dispatch } = useContext(GameContext);
+
+    const handleClick = () => {
+        dispatch({ type: Actions.fillCandidates })
+    }
+
+    return (
+        <button className='FillCandidatesButton' onClick={handleClick}>Fill Candidates</button>
+    )
+}
 
 const GameBoardWrapper = (props: GameBoardWrapperProps) => {
     console.log("GameBoardWrapper rerendered");
@@ -130,6 +141,8 @@ const GameBoardWrapper = (props: GameBoardWrapperProps) => {
             <GameBoard paused={paused} game={props.game} />
             <Numpad />
             <DeselectButton paused={paused} />
+            <FillCandidatesButton />
+
         </GameProvider>
     )
 }
