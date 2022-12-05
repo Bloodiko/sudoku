@@ -60,8 +60,8 @@ function validate(toCheck: toCheckArray): [number[], errorCandidates] { // row, 
 
 function findInvalidCells(currentGameState: string[], candidates: candidates[]): [number[], errorCandidates] {
     // return invalid cell numbers
-    let invalidCells: number[] = [];
-    let invalidCandidates: errorCandidates = {};
+    const invalidCells: number[] = [];
+    const invalidCandidates: errorCandidates = {};
 
     // check rows
     for (let i = 0; i < rowCells.length; i++) {
@@ -72,8 +72,15 @@ function findInvalidCells(currentGameState: string[], candidates: candidates[]):
             toCheck.push({ value: currentGameState[cellnumber], cellnumber, candidates: candidates[cellnumber] });
         }
         const [invalidRowCells, invalidRowCandidates] = validate(toCheck);
-        invalidCells = [...invalidCells, ...invalidRowCells];
-        invalidCandidates = { ...invalidCandidates, ...invalidRowCandidates };
+        invalidRowCells.forEach((cellnumber) => {
+            if (!invalidCells.includes(cellnumber)) {
+                invalidCells.push(cellnumber);
+            }
+        });
+        Object.keys(invalidRowCandidates).forEach((key) => {
+            const cellnumber = Number(key);
+            invalidCandidates[cellnumber] = [...invalidCandidates[cellnumber] || [], ...invalidRowCandidates[cellnumber]];
+        });
     }
 
     // check columns
@@ -85,8 +92,17 @@ function findInvalidCells(currentGameState: string[], candidates: candidates[]):
             toCheck.push({ value: currentGameState[cellnumber], cellnumber, candidates: candidates[cellnumber] });
         }
         const [invalidColCells, invalidColCandidates] = validate(toCheck);
-        invalidCells = [...invalidCells, ...invalidColCells];
-        invalidCandidates = { ...invalidCandidates, ...invalidColCandidates };
+        invalidColCells.forEach((cellnumber) => {
+            if (!invalidCells.includes(cellnumber)) {
+                invalidCells.push(cellnumber);
+            }
+        });
+        Object.keys(invalidColCandidates).forEach((key) => {
+            const cellnumber = Number(key);
+            invalidCandidates[cellnumber] = [...invalidCandidates[cellnumber] || [], ...invalidColCandidates[cellnumber]];
+        });
+
+
     }
 
     // check cubes
@@ -98,8 +114,17 @@ function findInvalidCells(currentGameState: string[], candidates: candidates[]):
             toCheck.push({ value: currentGameState[cellnumber], cellnumber, candidates: candidates[cellnumber] });
         }
         const [invalidCubeCells, invalidCubeCandidates] = validate(toCheck);
-        invalidCells = [...invalidCells, ...invalidCubeCells];
-        invalidCandidates = { ...invalidCandidates, ...invalidCubeCandidates };
+        invalidCubeCells.forEach((cellnumber) => {
+            if (!invalidCells.includes(cellnumber)) {
+                invalidCells.push(cellnumber);
+            }
+        }
+        );
+        Object.keys(invalidCubeCandidates).forEach((key) => {
+            const cellnumber = Number(key);
+            invalidCandidates[cellnumber] = [...invalidCandidates[cellnumber] || [], ...invalidCubeCandidates[cellnumber]];
+        }
+        );
     }
     return [invalidCells, invalidCandidates];
 }
