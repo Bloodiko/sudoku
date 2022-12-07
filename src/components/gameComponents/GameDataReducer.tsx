@@ -68,6 +68,33 @@ const checkCompleted = (gameState: string[], game: Sudoku) => {
 
 }
 
+const openCell = (selectedCell: number, generatedGame: string, direction: "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight", originalCell?: number): number => {
+    const currentCell = selectedCell;
+    let nextCell = currentCell;
+    switch (direction) {
+        case "ArrowUp":
+            nextCell = currentCell - 9;
+            break;
+        case "ArrowDown":
+            nextCell = currentCell + 9;
+            break;
+        case "ArrowLeft":
+            nextCell = currentCell - 1;
+            break;
+        case "ArrowRight":
+            nextCell = currentCell + 1;
+            break;
+    }
+    if (nextCell < 0 || nextCell > 80) {
+        return originalCell ? originalCell : currentCell;
+    }
+    if (generatedGame.charAt(nextCell) === '-') {
+        return nextCell;
+    } else {
+        return openCell(nextCell, generatedGame, direction, originalCell ? originalCell : currentCell);
+    }
+}
+
 
 const gameDataReducer = (state: GameData, action: ReducerAction) => {
     console.log("run dispatch with action: ", action.type);
@@ -89,6 +116,31 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
             }
 
             return newStateSelectCell;
+
+        case Actions.selectCellWithArrowKey:
+            if (state.completed) {
+                console.log("game completed");
+                return state;
+            }
+
+            if (state.selectedCell === null) {
+                //select first open cell
+                const firstOpenCell = state.generatedGame.puzzle.indexOf('-');
+                const newStateSelectCell = {
+                    ...state,
+                    highlightCells: highlightCells(firstOpenCell),
+                    selectedCell: firstOpenCell
+                }
+                return newStateSelectCell;
+            }
+
+            const nextCell = openCell(state.selectedCell, state.generatedGame.puzzle, action.payload);
+            const newStateSelectCellWithArrowKey = {
+                ...state,
+                highlightCells: highlightCells(nextCell),
+                selectedCell: nextCell
+            }
+            return newStateSelectCellWithArrowKey;
 
         case Actions.setCellValue:
 
@@ -129,6 +181,7 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
                 // check row, column, box for candidates that are not possible anymore
                 const newCandidates = [...state.candidates];
+                console.log(state.selectedCell)
                 const row = cellMapping[state.selectedCell].row;
                 const column = cellMapping[state.selectedCell].column;
                 const cube = cellMapping[state.selectedCell].cube;
@@ -146,7 +199,6 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
                     currentGameState: newGameState,
                     completed: completed,
                     completedOverlay: completed,
-                    selectedCell: null,
                     candidates: newCandidates,
                     highlightCells: [],
                     errorCells: invalidCells,

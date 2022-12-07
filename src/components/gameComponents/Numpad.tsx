@@ -11,7 +11,7 @@ const countNumber = (currentGameState: string[]) => {
         }
     }
     return counts;
-}
+};
 
 const NumberButton = (props: { num: number, count: number, onClick: (num: number) => void }) => {
 
@@ -70,14 +70,29 @@ const Numpad = () => {
             }
         }
 
+        function selectCellWithArrowKeys(e: any) {
+
+            if (e.target.nodeName !== "BODY") {
+                return;
+            }
+
+            if (e.key === "ArrowUp" || e.key === "ArrowDown" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
+                e.preventDefault();
+            }
+
+            dispatch({ type: Actions.selectCellWithArrowKey, payload: e.key });
+        }
+
         window.addEventListener("keydown", onKeyDown);
         window.addEventListener("keyup", onKeyUp);
+        window.addEventListener("keydown", selectCellWithArrowKeys);
 
         return () => {
             window.removeEventListener("keydown", onKeyDown);
             window.removeEventListener("keyup", onKeyUp);
+            window.removeEventListener("keydown", selectCellWithArrowKeys);
         }
-    }, []);
+    }, [dispatch]);
 
 
 
