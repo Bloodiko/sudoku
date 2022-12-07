@@ -2,6 +2,7 @@ import { Sudoku } from "sudoku-gen/dist/types/sudoku.type"
 
 enum Actions {
     selectCell,
+    selectCellWithArrowKey,
     setCellValue,
     toggleCandidate,
     fillCandidates,
@@ -14,7 +15,7 @@ enum Actions {
 
 type SelectCellAction = {
     type: Actions.selectCell,
-    payload: number
+    payload: number | null
 }
 
 type SetCellValueAction = {
@@ -44,8 +45,14 @@ type FillCandidatesAction = {
     type: Actions.fillCandidates,
 }
 
+type SelectCellWithArrowKeyAction = {
+    type: Actions.selectCellWithArrowKey,
+    payload: "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight"
+}
+
 type ReducerAction =
     SelectCellAction |
+    SelectCellWithArrowKeyAction |
     SetCellValueAction |
     NewGameAction |
     LoadGameAction |
