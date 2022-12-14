@@ -215,14 +215,16 @@ const gameDataReducer = (state: GameData, action: ReducerAction) => {
 
             const newStateToggleCandidate = {
                 ...state,
-                candidates: {
+                candidates: [
                     ...state.candidates,
-                    [state.selectedCell]: {
-                        ...state.candidates[state.selectedCell],
-                        [candidateOptions[action.payload]]: !state.candidates[state.selectedCell][candidateOptions[action.payload]]
-                    }
-                }
+                ]
             }
+
+            newStateToggleCandidate.candidates[state.selectedCell] = {
+                ...newStateToggleCandidate.candidates[state.selectedCell],
+                [candidateOptions[action.payload]]: !newStateToggleCandidate.candidates[state.selectedCell][candidateOptions[action.payload]]
+            }
+
             const [invalidCells, invalidCandidates] = findInvalidCells(state.currentGameState, newStateToggleCandidate.candidates);
 
             newStateToggleCandidate.errorCells = invalidCells;
