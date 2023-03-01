@@ -3,11 +3,10 @@
 /* 
     Generates new Game or loads it, and creates GameBoard
 */
-import React, { useMemo } from 'react';
+import { useRef } from 'react';
 import { DifficultyContext } from './DifficultyContext';
 import { useContext } from 'react';
 import diffEnum from './difficultyEnum';
-import { useEffect } from 'react';
 
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
 import { Sudoku } from 'sudoku-gen/dist/types/sudoku.type';
@@ -44,28 +43,21 @@ const Game = () => {
     const [game, setGame] = useState(undefined as Sudoku | undefined);
     console.log('rerender game')
 
-    // the memo is to prevent the game from being generated on every rerender, and only when the difficulty changes
-    // TODO: this needs to change! documentations says that this is not a good way to do this → useRef? 
+    //generate game only once
+    // previous solution useEffect and useMemo. But this is better
 
-    const combinedDiffSetGame = useMemo(() => {
-        return { difficulty: gamedifficulty, setGame: setGame, game: game }
-    }, [gamedifficulty, setGame, game]);
+    const gameGenerated = useRef(false);
 
-    useEffect(() => {
-        if (combinedDiffSetGame.game) {
-            return;
-        }
-
-        // if difficulty is continue, load game from local storage
-        if (combinedDiffSetGame.difficulty === diffEnum.CONTINUE) {
+    if (!gameGenerated.current) {
+        if (gamedifficulty === diffEnum.CONTINUE) {
             const gameData = JSON.parse(localStorage.getItem("currentGameData") || '{}');
             setGame(gameData.generatedGame);
-            return;
+            return null;
         }
         console.log('game does not exist - generate sudoku')
-        setGame(getSudoku(genDiff(combinedDiffSetGame.difficulty)))
-    }, [combinedDiffSetGame])
-
+        setGame(getSudoku(genDiff(gamedifficulty)))
+        gameGenerated.current = true;
+    }
 
     return (
         <>
