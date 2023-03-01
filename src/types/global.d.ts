@@ -34,7 +34,7 @@ declare global {
         currentGameState: string[];
         selectedCell: number | null;
         candidates: candidates[];
-        lastMoves: move[]; // temp, maybe TODO
+        lastMoves: moveCollection[]; // temp, maybe TODO
         completed: boolean;
         completedOverlay: boolean;
         highlightCells: number[];
@@ -49,5 +49,9 @@ declare global {
         cell: number,
         value?: string,
         candidate?: string,
+    }
+
+    type moveCollection = {
+        [key: number]: move;
     }
 }
