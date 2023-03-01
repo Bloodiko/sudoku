@@ -31,7 +31,7 @@ Press Shift and press any number on your Keyboard ( Shift Key + 1 to 9  or Shift
 
 ## Optional Goals
 
-- fill out all possible candidates
+- ~~fill out all possible candidates~~ **:heavy_check_mark:**
 - explain possible next steps (not only hint but also explain why)
   - solving techniques
 
