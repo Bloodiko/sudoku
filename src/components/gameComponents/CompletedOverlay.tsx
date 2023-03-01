@@ -1,5 +1,5 @@
 import { GameContext } from "./GameContext"
-import { useContext, useRef } from "react"
+import { useContext, useRef, useState } from "react"
 import { Actions } from "../../types/GameDataReducerType"
 import confetti from "canvas-confetti"
 
@@ -34,11 +34,16 @@ const CompletedOverlay = () => {
 
     const { gamedata, dispatch } = useContext(GameContext);
 
-    const saved = useRef(false)
+    const [saved, setSaved] = useState(false);
+
+    const [highscoreTime] = useState(gametimeString.get())
+
+    const [name, setName] = useState("Player");
 
     const highscoreRef = useRef<HTMLInputElement>(null)
 
-    confetti();
+    saved && confetti();
+    console.log(saved)
 
     return (
         <div className="completedOverlay">
@@ -55,7 +60,7 @@ const CompletedOverlay = () => {
             >
                 <p>Game Completed!</p>
                 <div>
-                    You solved the puzzle in <span>{gametimeString.get()}</span>.
+                    You solved the puzzle in <span>{highscoreTime}</span>.
                 </div>
                 <label htmlFor="highscoreNameIN" style={{ fontSize: "1rem" }}>Name</label>
 
@@ -64,27 +69,35 @@ const CompletedOverlay = () => {
                 }}
                     type="text"
                     placeholder="Enter your name"
-                    defaultValue={"Player"}
+                    value={name}
+                    onChange={(e) => {
+                        !saved && setName(e.target.value)
+                    }}
                 >
                 </input>
                 <button onClick={() => {
-                    if (!saved.current) {
+                    if (!saved) {
                         addRecord(highscoreRef.current?.value || "Player", gametime.get(), gamedata.generatedGame.difficulty)
-                        saved.current = true
+                        setSaved(true)
+                        setName(highscoreRef.current?.value || "Player")
                     }
                 }}>Save Highscore</button>
+                {
+                    saved && <div style={{ color: "green", textAlign: "center" }}>Highscore saved!</div>
+                }
 
 
             </div>
 
             <button className="closeOverlayButton" onClick={() => {
-                if (!saved.current) {
+                if (!saved) {
                     addRecord(highscoreRef.current?.value || "Player", gametime.get(), gamedata.generatedGame.difficulty)
-                    saved.current = true
+                    setSaved(true)
                 }
 
                 dispatch({ type: Actions.closeOverlay })
             }}>Close</button>
+
         </div>
     )
 }
