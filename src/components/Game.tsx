@@ -52,11 +52,13 @@ const Game = () => {
         if (gamedifficulty === diffEnum.CONTINUE) {
             const gameData = JSON.parse(localStorage.getItem("currentGameData") || '{}');
             setGame(gameData.generatedGame);
-            return null;
+            gameGenerated.current = true;
         }
-        console.log('game does not exist - generate sudoku')
-        setGame(getSudoku(genDiff(gamedifficulty)))
-        gameGenerated.current = true;
+        else {
+            console.log('game does not exist - generate sudoku')
+            setGame(getSudoku(genDiff(gamedifficulty)))
+            gameGenerated.current = true;
+        }
     }
 
     return (
