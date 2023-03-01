@@ -21,11 +21,11 @@ Press Shift and press any number on your Keyboard ( Shift Key + 1 to 9  or Shift
 
 - ~~have a menu~~                           **:heavy_check_mark:**
 - ~~play the game as simple as possible~~   **:heavy_check_mark:**
-- have a timer
-- have a Scoreboard (local storage)
-- add difficulty to scoreboard with filter
+- ~~have a timer~~                          **:heavy_check_mark:**
+- ~~have a Scoreboard (local storage)~~     **:heavy_check_mark:**
+- ~~add difficulty to scoreboard with filter~~  **:heavy_check_mark:**
 - ~~have a difficulty setting~~             **:heavy_check_mark:**
-- continue game after reload
+- ~~continue game after reload~~            **:heavy_check_mark:**
 - undo/redo
 - have a help function
 
