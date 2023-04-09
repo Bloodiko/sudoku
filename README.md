@@ -7,6 +7,10 @@ The Sudoku Generator used is from @Petewritescode: [Sudoku-gen@github](https://g
 
 Access the Live Version here: [Play Sudoku](https://bloodiko.github.io/sudoku)
 
+This game is designed to play offline. The Ranking / Leaderboard is only in local storage. 
+
+In the future it is supposed to work as a "PWA", which you can install locally, to fully work offline. 
+
 ## How to Play
 
 Click Play Sudoku
